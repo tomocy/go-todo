@@ -6,6 +6,29 @@ import (
 	"time"
 )
 
+func newUser(id userID, name, email, password string) (*user, error) {
+	if name == "" {
+		name = string(id)
+	}
+	if email == "" {
+		return nil, fmt.Errorf("empty email")
+	}
+	if password == "" {
+		return nil, fmt.Errorf("empty password")
+	}
+
+	return &user{
+		id:   id,
+		name: name,
+		profile: profile{
+			email: email,
+		},
+		cred: cred{
+			password: password,
+		},
+	}, nil
+}
+
 type user struct {
 	id      userID
 	name    string
