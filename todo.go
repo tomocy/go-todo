@@ -1,7 +1,8 @@
 package todo
 
 type user struct {
-	id userID
+	id   userID
+	name string
 }
 
 type userID string
