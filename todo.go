@@ -11,6 +11,7 @@ type user struct {
 	name    string
 	status  userStatus
 	profile profile
+	cred    cred
 }
 
 type userID string
