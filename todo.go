@@ -19,3 +19,5 @@ const (
 type profile struct {
 	email string
 }
+
+type taskID string
