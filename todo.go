@@ -1,5 +1,7 @@
 package todo
 
+import "time"
+
 type user struct {
 	id      userID
 	name    string
@@ -21,10 +23,11 @@ type profile struct {
 }
 
 type task struct {
-	id     taskID
-	userID userID
-	name   string
-	status taskStatus
+	id      taskID
+	userID  userID
+	name    string
+	status  taskStatus
+	dueDate time.Time
 }
 
 type taskID string
