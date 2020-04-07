@@ -22,6 +22,7 @@ type profile struct {
 
 type task struct {
 	id     taskID
+	userID userID
 	name   string
 	status taskStatus
 }
