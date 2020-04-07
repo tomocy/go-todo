@@ -27,6 +27,7 @@ type profile struct {
 }
 
 type TaskRepo interface {
+	NextID(context.Context) (taskID, error)
 	Save(context.Context, *task) error
 }
 
