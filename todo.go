@@ -26,3 +26,5 @@ type task struct {
 }
 
 type taskID string
+
+type taskStatus int
