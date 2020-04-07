@@ -26,7 +26,9 @@ type profile struct {
 	email string
 }
 
-type cred struct{}
+type cred struct {
+	password string
+}
 
 type TaskRepo interface {
 	NextID(context.Context) (taskID, error)
