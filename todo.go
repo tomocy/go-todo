@@ -14,3 +14,5 @@ const (
 	userActive userStatus = iota
 	userInactive
 )
+
+type profile struct{}
