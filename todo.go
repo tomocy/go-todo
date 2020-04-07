@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-type userRepo interface {
+type UserRepo interface {
 	NextID(context.Context) (userID, error)
 	Save(context.Context, *user) error
 }
