@@ -22,6 +22,8 @@ type profile struct {
 	email string
 }
 
+const postponedMaxTimes = 3
+
 type task struct {
 	id             taskID
 	userID         userID
