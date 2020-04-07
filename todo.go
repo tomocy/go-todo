@@ -11,7 +11,7 @@ type UserRepo interface {
 	Save(context.Context, *user) error
 }
 
-func newUser(id userID, name, email, password string) (*user, error) {
+func NewUser(id userID, name, email, password string) (*user, error) {
 	if name == "" {
 		name = string(id)
 	}
