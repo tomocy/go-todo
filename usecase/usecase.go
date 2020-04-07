@@ -8,6 +8,8 @@ import (
 	"github.com/tomocy/go-todo"
 )
 
+type createUser struct{}
+
 type createTask struct {
 	repo todo.TaskRepo
 }
