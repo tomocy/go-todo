@@ -27,6 +27,21 @@ type profile struct {
 
 const postponedMaxTimes = 3
 
+func newTask(id taskID, name string, dueDate time.Time) (*task, error) {
+	if id == "" {
+		return nil, fmt.Errorf("empty id")
+	}
+	if name == "" {
+		return nil, fmt.Errorf("empty name")
+	}
+
+	return &task{
+		id:      id,
+		name:    name,
+		dueDate: dueDate,
+	}, nil
+}
+
 type task struct {
 	id             taskID
 	userID         userID
