@@ -1,6 +1,7 @@
 package todo
 
 import (
+	"context"
 	"fmt"
 	"time"
 )
@@ -23,6 +24,10 @@ const (
 
 type profile struct {
 	email string
+}
+
+type taskRepo interface {
+	save(context.Context, *task) error
 }
 
 const postponedMaxTimes = 3
