@@ -26,8 +26,8 @@ type profile struct {
 	email string
 }
 
-type taskRepo interface {
-	save(context.Context, *task) error
+type TaskRepo interface {
+	Save(context.Context, *task) error
 }
 
 const postponedMaxTimes = 3
