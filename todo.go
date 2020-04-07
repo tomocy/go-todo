@@ -26,6 +26,8 @@ type profile struct {
 	email string
 }
 
+type cred struct{}
+
 type TaskRepo interface {
 	NextID(context.Context) (taskID, error)
 	Save(context.Context, *task) error
