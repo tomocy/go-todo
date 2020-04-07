@@ -6,3 +6,5 @@ type user struct {
 }
 
 type userID string
+
+type userStatus int
