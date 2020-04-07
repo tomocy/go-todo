@@ -8,3 +8,8 @@ type user struct {
 type userID string
 
 type userStatus int
+
+const (
+	userActive userStatus = iota
+	userInactive
+)
