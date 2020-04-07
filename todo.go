@@ -1,6 +1,9 @@
 package todo
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 type user struct {
 	id      userID
@@ -31,6 +34,17 @@ type task struct {
 	status         taskStatus
 	dueDate        time.Time
 	postponedTimes int
+}
+
+func (t *task) postpone() error {
+	if t.postponedTimes > postponedMaxTimes {
+		return fmt.Errorf("postponed times exceeded: task can be postponed up to %d", postponedMaxTimes)
+	}
+
+	t.dueDate.Add(24 * time.Hour)
+	t.postponedTimes++
+
+	return nil
 }
 
 type taskID string
