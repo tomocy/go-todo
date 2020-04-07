@@ -33,7 +33,7 @@ type TaskRepo interface {
 
 const postponedMaxTimes = 3
 
-func newTask(id taskID, name string, dueDate time.Time) (*task, error) {
+func NewTask(id taskID, name string, dueDate time.Time) (*task, error) {
 	if id == "" {
 		return nil, fmt.Errorf("empty id")
 	}
