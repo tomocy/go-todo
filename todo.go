@@ -23,11 +23,12 @@ type profile struct {
 }
 
 type task struct {
-	id      taskID
-	userID  userID
-	name    string
-	status  taskStatus
-	dueDate time.Time
+	id             taskID
+	userID         userID
+	name           string
+	status         taskStatus
+	dueDate        time.Time
+	postponedTimes int
 }
 
 type taskID string
