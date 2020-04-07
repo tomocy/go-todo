@@ -6,6 +6,11 @@ import (
 	"time"
 )
 
+type userRepo interface {
+	NextID(context.Context) (userID, error)
+	Save(context.Context, *user) error
+}
+
 func newUser(id userID, name, email, password string) (*user, error) {
 	if name == "" {
 		name = string(id)
