@@ -15,4 +15,6 @@ const (
 	userInactive
 )
 
-type profile struct{}
+type profile struct {
+	email string
+}
