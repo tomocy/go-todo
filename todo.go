@@ -28,3 +28,8 @@ type task struct {
 type taskID string
 
 type taskStatus int
+
+const (
+	taskUndone taskStatus = iota
+	taskDone
+)
