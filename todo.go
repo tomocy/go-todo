@@ -1,9 +1,10 @@
 package todo
 
 type user struct {
-	id     userID
-	name   string
-	status userStatus
+	id      userID
+	name    string
+	status  userStatus
+	profile profile
 }
 
 type userID string
