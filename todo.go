@@ -20,4 +20,8 @@ type profile struct {
 	email string
 }
 
+type task struct {
+	id taskID
+}
+
 type taskID string
