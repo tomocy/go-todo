@@ -7,6 +7,13 @@ import (
 	"github.com/tomocy/go-todo"
 )
 
+func NewUserRepo(fname string) *userRepo {
+	return &userRepo{
+		fname: fname,
+		users: make(map[todo.UserID]*todo.User),
+	}
+}
+
 type userRepo struct {
 	fname string
 	users map[todo.UserID]*todo.User
