@@ -1,6 +1,8 @@
 package cli
 
 import (
+	"io"
+
 	"github.com/tomocy/go-todo"
 	"github.com/tomocy/go-todo/infra/memory"
 	"github.com/urfave/cli"
@@ -8,6 +10,7 @@ import (
 
 type app struct {
 	*cli.App
+	w io.Writer
 }
 
 func (a *app) init() {
