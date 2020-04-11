@@ -31,6 +31,28 @@ func (a *app) init() {
 	a.Name = "todo"
 	a.Commands = []cli.Command{
 		{
+			Name: "user",
+			Subcommands: []cli.Command{
+				{
+					Name: "create",
+					Flags: []cli.Flag{
+						cli.StringFlag{
+							Name: "name",
+						},
+						cli.StringFlag{
+							Name:     "email",
+							Required: true,
+						},
+						cli.StringFlag{
+							Name:     "password",
+							Required: true,
+						},
+					},
+					Action: a.createUser,
+				},
+			},
+		},
+		{
 			Name:   "get",
 			Action: a.getTasks,
 		},
