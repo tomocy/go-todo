@@ -34,3 +34,22 @@ func (u *createTask) do(userID todo.UserID, name string, dueDate time.Time) (*to
 type postponeTask struct {
 	repo todo.TaskRepo
 }
+
+func (u *postponeTask) do(id todo.TaskID) (*todo.Task, error) {
+	ctx := context.TODO()
+
+	task, err := u.repo.Find(ctx, id)
+	if err != nil {
+		return nil, fmt.Errorf("failed to find task: %w", err)
+	}
+
+	if err := task.Postpone(); err != nil {
+		return nil, fmt.Errorf("failed to postpone task: %w", err)
+	}
+
+	if err := u.repo.Save(ctx, task); err != nil {
+		return nil, fmt.Errorf("failed to postpone task: %w", err)
+	}
+
+	return task, nil
+}

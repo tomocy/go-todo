@@ -28,6 +28,29 @@ func TestCreateTask(t *testing.T) {
 	}
 }
 
+func TestPostponeTask(t *testing.T) {
+	repo := new(memory.TaskRepo)
+
+	createUsecase := createTask{
+		repo: repo,
+	}
+	task, _ := createUsecase.do("user id", "name", time.Time{})
+
+	u := postponeTask{
+		repo: repo,
+	}
+	task, err := u.do(task.ID())
+	if err != nil {
+		t.Errorf("should have postponed task: %s", err)
+		return
+	}
+
+	if task.PostponedTimes() != 1 {
+		t.Errorf("should have returned the postponed task: %s", err)
+		return
+	}
+}
+
 func assertTask(t *todo.Task, userID todo.UserID, name string, dueDate time.Time) error {
 	if t.UserID() != userID {
 		return reportUnexpected("user id", t.UserID(), userID)
