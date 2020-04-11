@@ -13,6 +13,11 @@ func (a *app) getTasks(ctx *cli.Context) error {
 		return err
 	}
 
+	if len(tasks) < 1 {
+		a.printf("Nothing to do\n")
+		return nil
+	}
+
 	a.printf("TODOs\n")
 	for _, t := range tasks {
 		a.printf("%v\n", t)
