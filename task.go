@@ -94,8 +94,8 @@ func (t *Task) setDueDate(d time.Time) error {
 const postponedMaxTimes = 3
 
 func (t *Task) postpone() error {
-	if t.postponedTimes > postponedMaxTimes {
-		return fmt.Errorf("postponed times exceeded: Task can be postponed up to %d", postponedMaxTimes)
+	if t.postponedTimes >= postponedMaxTimes {
+		return fmt.Errorf("postponed times exceeded: task can be postponed up to %d", postponedMaxTimes)
 	}
 
 	t.dueDate.Add(24 * time.Hour)
