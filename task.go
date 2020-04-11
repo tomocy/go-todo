@@ -11,10 +11,13 @@ type TaskRepo interface {
 	Save(context.Context, *Task) error
 }
 
-func NewTask(id taskID, name string, dueDate time.Time) (*Task, error) {
+func NewTask(id taskID, userID UserID, name string, dueDate time.Time) (*Task, error) {
 	t := new(Task)
 
 	if err := t.setID(id); err != nil {
+		return nil, err
+	}
+	if err := t.setUserID(userID); err != nil {
 		return nil, err
 	}
 	if err := t.setName(name); err != nil {
