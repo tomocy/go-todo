@@ -64,6 +64,16 @@ func (u *user) setName(name string) error {
 	return nil
 }
 
+func (u *user) setEmail(email string) error {
+	if email == "" {
+		return fmt.Errorf("empty email")
+	}
+
+	u.profile.email = email
+
+	return nil
+}
+
 type userID string
 
 type userStatus int
