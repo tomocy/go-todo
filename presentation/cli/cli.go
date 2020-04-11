@@ -17,7 +17,12 @@ type app struct {
 func (a *app) init() {
 	a.App = cli.NewApp()
 	a.Name = "todo"
-	a.Commands = []cli.Command{}
+	a.Commands = []cli.Command{
+		{
+			Name:   "get",
+			Action: a.getTasks,
+		},
+	}
 }
 
 func (a *app) printf(format string, as ...interface{}) {
