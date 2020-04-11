@@ -8,6 +8,37 @@ import (
 	"github.com/tomocy/go-todo/infra/memory"
 )
 
+func TestGetTasks(t *testing.T) {
+	repo := new(memory.TaskRepo)
+
+	ts := []struct {
+		userID  todo.UserID
+		name    string
+		dueDate time.Time
+	}{}
+
+	createUsecase := createTask{
+		repo: repo,
+	}
+	for _, t := range ts {
+		createUsecase.do(t.userID, t.name, t.dueDate)
+	}
+
+	u := getTasks{
+		repo: repo,
+	}
+	tasks, err := u.do()
+	if err != nil {
+		t.Errorf("should have got tasks: %s", err)
+		return
+	}
+
+	if len(tasks) != len(ts) {
+		t.Errorf("should have returned the got tasks: %s", reportUnexpected("len of tasks", len(tasks), len(ts)))
+		return
+	}
+}
+
 func TestCreateTask(t *testing.T) {
 	repo := new(memory.TaskRepo)
 	u := createTask{
