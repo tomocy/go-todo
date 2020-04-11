@@ -11,8 +11,8 @@ type createUser struct {
 	repo todo.UserRepo
 }
 
-func (u *createUser) createUser(name, email, password string) error {
-	ctx := context.Background()
+func (u *createUser) do(name, email, password string) error {
+	ctx := context.TODO()
 
 	id, err := u.repo.NextID(ctx)
 	if err != nil {
