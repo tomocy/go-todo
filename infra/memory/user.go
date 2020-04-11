@@ -27,6 +27,14 @@ func (r *UserRepo) FindByEmail(_ context.Context, email string) (*todo.User, err
 	return nil, fmt.Errorf("no such user")
 }
 
+func (r *UserRepo) Save(_ context.Context, u *todo.User) error {
+	r.initIfNecessary()
+
+	r.users[u.ID()] = u
+
+	return nil
+}
+
 func (u *UserRepo) initIfNecessary() {
 	if u.users == nil {
 		u.users = make(map[todo.UserID]*todo.User)
