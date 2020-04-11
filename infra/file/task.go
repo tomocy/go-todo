@@ -19,3 +19,10 @@ type task struct {
 	DueDate        time.Time       `json:"due_date"`
 	PostponedTimes int             `json:"postponed_times"`
 }
+
+func (t *task) adapt() *todo.Task {
+	return todo.RecoverTask(
+		t.ID, t.UserID, t.Name,
+		t.Status, t.DueDate, t.PostponedTimes,
+	)
+}
