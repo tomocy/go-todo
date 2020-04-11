@@ -48,12 +48,12 @@ func (r *taskRepo) Find(_ context.Context, id todo.TaskID) (*todo.Task, error) {
 }
 
 func (r *taskRepo) load() error {
-	var ts []*task
-	if err := load(r.fname, ts); err != nil {
+	s, err := load(r.fname)
+	if err != nil {
 		return err
 	}
 
-	for _, t := range ts {
+	for _, t := range s.Tasks {
 		adapted := t.adapt()
 		r.tasks[adapted.ID()] = adapted
 	}
@@ -62,9 +62,15 @@ func (r *taskRepo) load() error {
 }
 
 func (r *taskRepo) save(t *todo.Task) error {
-	converted := convertTask(t)
+	s, err := load(r.fname)
+	if err != nil {
+		return fmt.Errorf("failed to load status: %w", err)
+	}
 
-	return save(r.fname, converted)
+	converted := convertTask(t)
+	s.addTask(converted)
+
+	return save(r.fname, s)
 }
 
 func convertTask(src *todo.Task) *task {
