@@ -16,7 +16,7 @@ func TestCreateUser(t *testing.T) {
 
 	name, email, pass := "name", "email", "pass"
 
-	user, err := u.do(name, email, pass)
+	user, err := u.Do(name, email, pass)
 	if err != nil {
 		t.Errorf("should have created user: %s", err)
 		return
@@ -35,7 +35,7 @@ func TestAuthenticateUser(t *testing.T) {
 	}
 
 	name, email, pass := "name", "email", "pass"
-	createUsecase.do(name, email, pass)
+	createUsecase.Do(name, email, pass)
 
 	u := authenticateUser{
 		repo: repo,
