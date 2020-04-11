@@ -44,6 +44,18 @@ func (r *userRepo) load() error {
 	return nil
 }
 
+func (r *userRepo) save(u *todo.User) error {
+	s, err := load(r.fname)
+	if err != nil {
+		return fmt.Errorf("failed to load: %w", err)
+	}
+
+	converted := convertUser(u)
+	s.addUser(converted)
+
+	return save(r.fname, s)
+}
+
 func convertUser(src *todo.User) *user {
 	return &user{
 		ID:       src.ID(),
