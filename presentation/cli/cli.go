@@ -9,6 +9,15 @@ import (
 	"github.com/urfave/cli"
 )
 
+func NewApp(w io.Writer) *app {
+	a := &app{
+		w: w,
+	}
+	a.init()
+
+	return a
+}
+
 type app struct {
 	*cli.App
 	w io.Writer
