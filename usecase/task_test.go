@@ -27,7 +27,7 @@ func TestGetTasks(t *testing.T) {
 	u := getTasks{
 		repo: repo,
 	}
-	tasks, err := u.do()
+	tasks, err := u.Do()
 	if err != nil {
 		t.Errorf("should have got tasks: %s", err)
 		return

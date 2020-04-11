@@ -18,7 +18,7 @@ type getTasks struct {
 	repo todo.TaskRepo
 }
 
-func (u *getTasks) do() ([]*todo.Task, error) {
+func (u *getTasks) Do() ([]*todo.Task, error) {
 	ctx := context.TODO()
 
 	tasks, err := u.repo.Get(ctx)
