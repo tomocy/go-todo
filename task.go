@@ -39,6 +39,10 @@ type Task struct {
 	postponedTimes int
 }
 
+func (t *Task) ID() TaskID {
+	return t.id
+}
+
 func (t *Task) setID(id TaskID) error {
 	if id == "" {
 		return fmt.Errorf("empty id")
