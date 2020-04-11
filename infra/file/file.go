@@ -55,6 +55,17 @@ type status struct {
 	Tasks []*task `json:"tasks"`
 }
 
+func (s *status) addUser(u *user) {
+	for i, added := range s.Users {
+		if added.ID == u.ID {
+			s.Users[i] = u
+			return
+		}
+	}
+
+	s.Users = append(s.Users, u)
+}
+
 func (s *status) addTask(t *task) {
 	for i, added := range s.Tasks {
 		if added.ID == t.ID {
