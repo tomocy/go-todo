@@ -53,8 +53,13 @@ func (a *app) init() {
 			},
 		},
 		{
-			Name:   "get",
-			Action: a.getTasks,
+			Name: "task",
+			Subcommands: []cli.Command{
+				{
+					Name:   "get",
+					Action: a.getTasks,
+				},
+			},
 		},
 	}
 }
