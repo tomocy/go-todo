@@ -1,6 +1,8 @@
 package file
 
 import (
+	"context"
+	"fmt"
 	"time"
 
 	"github.com/tomocy/go-todo"
@@ -16,6 +18,21 @@ func NewTaskRepo(fname string) *taskRepo {
 type taskRepo struct {
 	fname string
 	tasks map[todo.TaskID]*todo.Task
+}
+
+func (r *taskRepo) Get(context.Context) ([]*todo.Task, error) {
+	if err := r.load(); err != nil {
+		return nil, fmt.Errorf("failed to load tasks: %w", err)
+	}
+
+	ts := make([]*todo.Task, len(r.tasks))
+	var i int
+	for _, t := range r.tasks {
+		ts[i] = t
+		i++
+	}
+
+	return ts, nil
 }
 
 func (r *taskRepo) load() error {
