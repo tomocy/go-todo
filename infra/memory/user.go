@@ -8,7 +8,7 @@ import (
 )
 
 type UserRepo struct {
-	users []*todo.User
+	users map[todo.UserID]*todo.User
 }
 
 func (r *UserRepo) NextID(context.Context) (todo.UserID, error) {
@@ -16,6 +16,8 @@ func (r *UserRepo) NextID(context.Context) (todo.UserID, error) {
 }
 
 func (r *UserRepo) FindByEmail(_ context.Context, email string) (*todo.User, error) {
+	r.initIfNecessary()
+
 	for _, u := range r.users {
 		if u.Email() == email {
 			return u, nil
@@ -23,4 +25,10 @@ func (r *UserRepo) FindByEmail(_ context.Context, email string) (*todo.User, err
 	}
 
 	return nil, fmt.Errorf("no such user")
+}
+
+func (u *UserRepo) initIfNecessary() {
+	if u.users == nil {
+		u.users = make(map[todo.UserID]*todo.User)
+	}
 }
