@@ -67,6 +67,10 @@ func (t *Task) setUserID(id UserID) error {
 	return nil
 }
 
+func (t *Task) Name() string {
+	return t.name
+}
+
 func (t *Task) setName(n string) error {
 	if n == "" {
 		return fmt.Errorf("empty name")
