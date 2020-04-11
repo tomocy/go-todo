@@ -37,7 +37,6 @@ func NewUser(id userID, name, email string, password password) (*user, error) {
 
 type user struct {
 	id      userID
-	name    string
 	status  userStatus
 	profile profile
 	cred    cred
@@ -58,7 +57,7 @@ func (u *user) setName(name string) error {
 		return fmt.Errorf("empty name")
 	}
 
-	u.name = name
+	u.profile.name = name
 
 	return nil
 }
@@ -93,6 +92,7 @@ const (
 )
 
 type profile struct {
+	name  string
 	email string
 }
 
