@@ -6,6 +6,13 @@ import (
 	"github.com/tomocy/go-todo"
 )
 
+func NewTaskRepo(fname string) *taskRepo {
+	return &taskRepo{
+		fname: fname,
+		tasks: make(map[todo.TaskID]*todo.Task),
+	}
+}
+
 type taskRepo struct {
 	fname string
 	tasks map[todo.TaskID]*todo.Task
