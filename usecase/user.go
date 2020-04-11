@@ -33,3 +33,7 @@ func (u *createUser) createUser(name, email, password string) error {
 
 	return nil
 }
+
+type authenticateUser struct {
+	repo todo.UserRepo
+}
