@@ -57,6 +57,10 @@ func (u *User) setID(id UserID) error {
 	return nil
 }
 
+func (u *User) Name() string {
+	return u.name
+}
+
 func (u *User) setName(name string) error {
 	if name == "" {
 		return fmt.Errorf("empty name")
