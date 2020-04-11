@@ -24,7 +24,11 @@ func generateRandomString(length int) string {
 }
 
 func load(fname string) (status, error) {
-	src, err := os.Open(fname)
+	if err := initIfNotExist(fname); err != nil {
+		return status{}, fmt.Errorf("failed to init file: %w", err)
+	}
+
+	src, err := os.OpenFile(fname, os.O_RDONLY|os.O_CREATE, 0644)
 	if err != nil {
 		return status{}, fmt.Errorf("failed to open file: %w", err)
 	}
@@ -35,6 +39,14 @@ func load(fname string) (status, error) {
 	}
 
 	return dst, nil
+}
+
+func initIfNotExist(fname string) error {
+	if _, err := os.Stat(fname); err == nil {
+		return nil
+	}
+
+	return save(fname, status{})
 }
 
 func save(fname string, src status) error {
