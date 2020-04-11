@@ -36,10 +36,11 @@ func NewUser(id userID, name, email string, password password) (*user, error) {
 }
 
 type user struct {
-	id      userID
-	status  userStatus
-	profile profile
-	cred    cred
+	id       userID
+	name     string
+	email    string
+	password password
+	status   userStatus
 }
 
 func (u *user) setID(id userID) error {
@@ -57,7 +58,7 @@ func (u *user) setName(name string) error {
 		return fmt.Errorf("empty name")
 	}
 
-	u.profile.name = name
+	u.name = name
 
 	return nil
 }
@@ -67,7 +68,7 @@ func (u *user) setEmail(email string) error {
 		return fmt.Errorf("empty email")
 	}
 
-	u.profile.email = email
+	u.email = email
 
 	return nil
 }
@@ -77,7 +78,7 @@ func (u *user) setPassword(pass password) error {
 		return fmt.Errorf("empty password")
 	}
 
-	u.cred.password = pass
+	u.password = pass
 
 	return nil
 }
@@ -90,15 +91,6 @@ const (
 	userActive userStatus = iota
 	userInactive
 )
-
-type profile struct {
-	name  string
-	email string
-}
-
-type cred struct {
-	password password
-}
 
 func HashPassword(p string) (password, error) {
 	hashed, err := bcrypt.GenerateFromPassword([]byte(p), bcrypt.DefaultCost)
