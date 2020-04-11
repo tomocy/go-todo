@@ -31,3 +31,5 @@ func save(fname string, v interface{}) error {
 
 	return nil
 }
+
+type status struct{}
