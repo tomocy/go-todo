@@ -12,18 +12,19 @@ type TaskRepo interface {
 }
 
 func NewTask(id taskID, name string, dueDate time.Time) (*task, error) {
-	if id == "" {
-		return nil, fmt.Errorf("empty id")
+	t := new(task)
+
+	if err := t.setID(id); err != nil {
+		return nil, err
 	}
-	if name == "" {
-		return nil, fmt.Errorf("empty name")
+	if err := t.setName(name); err != nil {
+		return nil, err
+	}
+	if err := t.setDueDate(dueDate); err != nil {
+		return nil, err
 	}
 
-	return &task{
-		id:      id,
-		name:    name,
-		dueDate: dueDate,
-	}, nil
+	return t, nil
 }
 
 type task struct {
