@@ -98,7 +98,7 @@ func (t *Task) PostponedTimes() int {
 
 const postponedMaxTimes = 3
 
-func (t *Task) postpone() error {
+func (t *Task) Postpone() error {
 	if t.postponedTimes >= postponedMaxTimes {
 		return fmt.Errorf("postponed times exceeded: task can be postponed up to %d", postponedMaxTimes)
 	}
