@@ -26,7 +26,7 @@ func save(fname string, src status) error {
 		return fmt.Errorf("failed to open file: %w", err)
 	}
 
-	if err := json.NewEncoder(dst).Encode(v); err != nil {
+	if err := json.NewEncoder(dst).Encode(src); err != nil {
 		return fmt.Errorf("failed to encode: %w", err)
 	}
 
