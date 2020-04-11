@@ -18,7 +18,11 @@ func (u *createUser) createUser(name, email, password string) error {
 	if err != nil {
 		return fmt.Errorf("failed to generate user id: %w", err)
 	}
-	user, err := todo.NewUser(id, name, email, password)
+	hashed, err := todo.HashPassword(password)
+	if err != nil {
+		return fmt.Errorf("failed to hash password: %w", err)
+	}
+	user, err := todo.NewUser(id, name, email, hashed)
 	if err != nil {
 		return fmt.Errorf("failed to generate user: %w", err)
 	}

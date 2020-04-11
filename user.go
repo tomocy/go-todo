@@ -13,7 +13,7 @@ type UserRepo interface {
 	Save(context.Context, *user) error
 }
 
-func NewUser(id userID, name, email, password string) (*user, error) {
+func NewUser(id userID, name, email string, password password) (*user, error) {
 	if name == "" {
 		name = string(id)
 	}
@@ -58,7 +58,7 @@ type profile struct {
 }
 
 type cred struct {
-	password string
+	password password
 }
 
 func HashPassword(p string) (password, error) {
