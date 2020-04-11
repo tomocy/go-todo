@@ -45,6 +45,16 @@ func (t *task) setID(id taskID) error {
 	return nil
 }
 
+func (t *task) setName(n string) error {
+	if n == "" {
+		return fmt.Errorf("empty name")
+	}
+
+	t.name = n
+
+	return nil
+}
+
 const postponedMaxTimes = 3
 
 func (t *task) postpone() error {
