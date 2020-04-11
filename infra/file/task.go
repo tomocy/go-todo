@@ -61,6 +61,12 @@ func (r *taskRepo) load() error {
 	return nil
 }
 
+func (r *taskRepo) save(t *todo.Task) error {
+	converted := convertTask(t)
+
+	return save(r.fname, converted)
+}
+
 func convertTask(src *todo.Task) *task {
 	return &task{
 		ID:             src.ID(),
