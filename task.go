@@ -36,7 +36,7 @@ type Task struct {
 	id             TaskID
 	userID         UserID
 	name           string
-	status         taskStatus
+	status         TaskStatus
 	dueDate        time.Time
 	postponedTimes int
 }
@@ -112,9 +112,9 @@ func (t *Task) Postpone() error {
 
 type TaskID string
 
-type taskStatus int
+type TaskStatus int
 
 const (
-	taskUndone taskStatus = iota
+	taskUndone TaskStatus = iota
 	taskDone
 )
