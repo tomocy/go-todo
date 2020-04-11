@@ -12,7 +12,7 @@ type createTask struct {
 	repo todo.TaskRepo
 }
 
-func (u *createTask) createTask(name string, dueDate time.Time) (*todo.Task, error) {
+func (u *createTask) do(name string, dueDate time.Time) (*todo.Task, error) {
 	ctx := context.Background()
 
 	id, err := u.repo.NextID(ctx)
