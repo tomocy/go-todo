@@ -32,6 +32,20 @@ func NewTask(id TaskID, userID UserID, name string, dueDate time.Time) (*Task, e
 	return t, nil
 }
 
+func RecoverTask(
+	id TaskID, userID UserID, name string,
+	status TaskStatus, dueDate time.Time, postponedTimes int,
+) *Task {
+	return &Task{
+		id:             id,
+		userID:         userID,
+		name:           name,
+		status:         status,
+		dueDate:        dueDate,
+		postponedTimes: postponedTimes,
+	}
+}
+
 type Task struct {
 	id             TaskID
 	userID         UserID
