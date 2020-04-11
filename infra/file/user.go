@@ -44,6 +44,16 @@ func (r *userRepo) load() error {
 	return nil
 }
 
+func convertUser(src *todo.User) *user {
+	return &user{
+		ID:       src.ID(),
+		Name:     src.Name(),
+		Email:    src.Email(),
+		Password: src.Password(),
+		Status:   src.Status(),
+	}
+}
+
 type user struct {
 	ID       todo.UserID     `json:"id"`
 	Name     string          `json:"name"`
