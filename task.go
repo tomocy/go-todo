@@ -8,6 +8,7 @@ import (
 
 type TaskRepo interface {
 	NextID(context.Context) (TaskID, error)
+	Get(context.Context) ([]*Task, error)
 	Find(context.Context, TaskID) (*Task, error)
 	Save(context.Context, *Task) error
 }
