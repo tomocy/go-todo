@@ -51,6 +51,7 @@ func save(fname string, src status) error {
 }
 
 type status struct {
+	Users []*user `json:"users"`
 	Tasks []*task `json:"tasks"`
 }
 
