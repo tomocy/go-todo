@@ -29,6 +29,12 @@ func (u *getTasks) Do() ([]*todo.Task, error) {
 	return tasks, nil
 }
 
+func NewCreateTask(repo todo.TaskRepo) *createTask {
+	return &createTask{
+		repo: repo,
+	}
+}
+
 type createTask struct {
 	repo todo.TaskRepo
 }
