@@ -1,3 +1,9 @@
 package memory
 
-type UserRepo struct{}
+import (
+	"github.com/tomocy/go-todo"
+)
+
+type UserRepo struct {
+	users []*todo.User
+}
