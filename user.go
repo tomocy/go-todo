@@ -13,7 +13,7 @@ type UserRepo interface {
 	Save(context.Context, *User) error
 }
 
-func NewUser(id UserID, name, email string, password password) (*User, error) {
+func NewUser(id UserID, name, email string, password Password) (*User, error) {
 	u := new(User)
 
 	if err := u.setID(id); err != nil {
@@ -39,7 +39,7 @@ type User struct {
 	id       UserID
 	name     string
 	email    string
-	password password
+	password Password
 	status   userStatus
 }
 
@@ -85,13 +85,13 @@ func (u *User) setEmail(email string) error {
 	return nil
 }
 
-func (u *User) Password() password {
+func (u *User) Password() Password {
 	return u.password
 }
 
-func (u *User) setPassword(pass password) error {
+func (u *User) setPassword(pass Password) error {
 	if pass == "" {
-		return fmt.Errorf("empty password")
+		return fmt.Errorf("empty Password")
 	}
 
 	u.password = pass
@@ -108,17 +108,17 @@ const (
 	userInactive
 )
 
-func HashPassword(p string) (password, error) {
+func HashPassword(p string) (Password, error) {
 	hashed, err := bcrypt.GenerateFromPassword([]byte(p), bcrypt.DefaultCost)
 	if err != nil {
 		return "", err
 	}
 
-	return password(hashed), nil
+	return Password(hashed), nil
 }
 
-type password string
+type Password string
 
-func (p password) IsSame(other string) bool {
+func (p Password) IsSame(other string) bool {
 	return bcrypt.CompareHashAndPassword([]byte(p), []byte(other)) == nil
 }
