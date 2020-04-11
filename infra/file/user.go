@@ -22,3 +22,10 @@ type user struct {
 	Password todo.Password   `json:"password"`
 	Status   todo.UserStatus `json:"status"`
 }
+
+func (u *user) adapt() *todo.User {
+	return todo.RecoverUser(
+		u.ID, u.Name, u.Email,
+		u.Password, u.Status,
+	)
+}
