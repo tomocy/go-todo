@@ -8,11 +8,11 @@ import (
 
 type TaskRepo interface {
 	NextID(context.Context) (taskID, error)
-	Save(context.Context, *task) error
+	Save(context.Context, *Task) error
 }
 
-func NewTask(id taskID, name string, dueDate time.Time) (*task, error) {
-	t := new(task)
+func NewTask(id taskID, name string, dueDate time.Time) (*Task, error) {
+	t := new(Task)
 
 	if err := t.setID(id); err != nil {
 		return nil, err
@@ -27,7 +27,7 @@ func NewTask(id taskID, name string, dueDate time.Time) (*task, error) {
 	return t, nil
 }
 
-type task struct {
+type Task struct {
 	id             taskID
 	userID         userID
 	name           string
@@ -36,7 +36,7 @@ type task struct {
 	postponedTimes int
 }
 
-func (t *task) setID(id taskID) error {
+func (t *Task) setID(id taskID) error {
 	if id == "" {
 		return fmt.Errorf("empty id")
 	}
@@ -46,7 +46,7 @@ func (t *task) setID(id taskID) error {
 	return nil
 }
 
-func (t *task) setName(n string) error {
+func (t *Task) setName(n string) error {
 	if n == "" {
 		return fmt.Errorf("empty name")
 	}
@@ -56,7 +56,7 @@ func (t *task) setName(n string) error {
 	return nil
 }
 
-func (t *task) setDueDate(d time.Time) error {
+func (t *Task) setDueDate(d time.Time) error {
 	t.dueDate = d
 
 	return nil
@@ -64,9 +64,9 @@ func (t *task) setDueDate(d time.Time) error {
 
 const postponedMaxTimes = 3
 
-func (t *task) postpone() error {
+func (t *Task) postpone() error {
 	if t.postponedTimes > postponedMaxTimes {
-		return fmt.Errorf("postponed times exceeded: task can be postponed up to %d", postponedMaxTimes)
+		return fmt.Errorf("postponed times exceeded: Task can be postponed up to %d", postponedMaxTimes)
 	}
 
 	t.dueDate.Add(24 * time.Hour)
