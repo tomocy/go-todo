@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"fmt"
 	"io"
 
 	"github.com/tomocy/go-todo"
@@ -17,6 +18,10 @@ func (a *app) init() {
 	a.App = cli.NewApp()
 	a.Name = "todo"
 	a.Commands = []cli.Command{}
+}
+
+func (a *app) printf(format string, as ...interface{}) {
+	fmt.Fprintf(a.w, format, as...)
 }
 
 func (a *app) taskRepo() todo.TaskRepo {
