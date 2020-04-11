@@ -91,6 +91,10 @@ func (t *Task) setDueDate(d time.Time) error {
 	return nil
 }
 
+func (t *Task) PostponedTimes() int {
+	return t.postponedTimes
+}
+
 const postponedMaxTimes = 3
 
 func (t *Task) postpone() error {
