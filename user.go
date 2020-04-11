@@ -74,6 +74,16 @@ func (u *user) setEmail(email string) error {
 	return nil
 }
 
+func (u *user) setPassword(pass password) error {
+	if pass == "" {
+		return fmt.Errorf("empty password")
+	}
+
+	u.cred.password = pass
+
+	return nil
+}
+
 type userID string
 
 type userStatus int
