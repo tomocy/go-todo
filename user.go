@@ -44,6 +44,16 @@ type user struct {
 	cred    cred
 }
 
+func (u *user) setID(id userID) error {
+	if id == "" {
+		return fmt.Errorf("empty id")
+	}
+
+	u.id = id
+
+	return nil
+}
+
 type userID string
 
 type userStatus int
