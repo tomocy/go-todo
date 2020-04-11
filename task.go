@@ -97,6 +97,10 @@ func (t *Task) setName(n string) error {
 	return nil
 }
 
+func (t *Task) Status() TaskStatus {
+	return t.status
+}
+
 func (t *Task) DueDate() time.Time {
 	return t.dueDate
 }
