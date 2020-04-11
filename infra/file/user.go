@@ -44,6 +44,10 @@ func (r *userRepo) load() error {
 	return nil
 }
 
+func (r *userRepo) Save(_ context.Context, u *todo.User) error {
+	return r.save(u)
+}
+
 func (r *userRepo) save(u *todo.User) error {
 	s, err := load(r.fname)
 	if err != nil {
