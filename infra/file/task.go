@@ -61,6 +61,10 @@ func (r *taskRepo) load() error {
 	return nil
 }
 
+func (r *taskRepo) Save(_ context.Context, t *todo.Task) error {
+	return r.save(t)
+}
+
 func (r *taskRepo) save(t *todo.Task) error {
 	s, err := load(r.fname)
 	if err != nil {
