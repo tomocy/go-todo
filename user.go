@@ -3,6 +3,8 @@ package todo
 import (
 	"context"
 	"fmt"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserRepo interface {
@@ -60,3 +62,7 @@ type cred struct {
 }
 
 type password string
+
+func (p password) isSame(other string) bool {
+	return bcrypt.CompareHashAndPassword([]byte(p), []byte(other)) == nil
+}
