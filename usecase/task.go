@@ -30,3 +30,7 @@ func (u *createTask) do(userID todo.UserID, name string, dueDate time.Time) (*to
 
 	return task, nil
 }
+
+type postponeTask struct {
+	repo todo.TaskRepo
+}
