@@ -55,6 +55,12 @@ func (t *task) setName(n string) error {
 	return nil
 }
 
+func (t *task) setDueDate(d time.Time) error {
+	t.dueDate = d
+
+	return nil
+}
+
 const postponedMaxTimes = 3
 
 func (t *task) postpone() error {
