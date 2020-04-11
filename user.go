@@ -61,6 +61,15 @@ type cred struct {
 	password string
 }
 
+func hashPassword(p string) (password, error) {
+	hashed, err := bcrypt.GenerateFromPassword([]byte(p), bcrypt.DefaultCost)
+	if err != nil {
+		return "", err
+	}
+
+	return password(hashed), nil
+}
+
 type password string
 
 func (p password) isSame(other string) bool {
