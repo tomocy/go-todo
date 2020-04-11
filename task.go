@@ -35,6 +35,16 @@ type task struct {
 	postponedTimes int
 }
 
+func (t *task) setID(id taskID) error {
+	if id == "" {
+		return fmt.Errorf("empty id")
+	}
+
+	t.id = id
+
+	return nil
+}
+
 const postponedMaxTimes = 3
 
 func (t *task) postpone() error {
