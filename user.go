@@ -61,7 +61,7 @@ type cred struct {
 	password string
 }
 
-func hashPassword(p string) (password, error) {
+func HashPassword(p string) (password, error) {
 	hashed, err := bcrypt.GenerateFromPassword([]byte(p), bcrypt.DefaultCost)
 	if err != nil {
 		return "", err
