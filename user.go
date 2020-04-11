@@ -35,6 +35,19 @@ func NewUser(id UserID, name, email string, password Password) (*User, error) {
 	return u, nil
 }
 
+func RecoverUser(
+	id UserID, name, email string,
+	password Password, status UserStatus,
+) *User {
+	return &User{
+		id:       id,
+		name:     name,
+		email:    email,
+		password: password,
+		status:   status,
+	}
+}
+
 type User struct {
 	id       UserID
 	name     string
