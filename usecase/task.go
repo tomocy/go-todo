@@ -8,6 +8,12 @@ import (
 	"github.com/tomocy/go-todo"
 )
 
+func NewGetTasks(repo todo.TaskRepo) *getTasks {
+	return &getTasks{
+		repo: repo,
+	}
+}
+
 type getTasks struct {
 	repo todo.TaskRepo
 }
