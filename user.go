@@ -43,6 +43,10 @@ type User struct {
 	status   userStatus
 }
 
+func (u *User) ID() UserID {
+	return u.id
+}
+
 func (u *User) setID(id UserID) error {
 	if id == "" {
 		return fmt.Errorf("empty id")
