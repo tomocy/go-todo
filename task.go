@@ -29,7 +29,7 @@ func NewTask(id taskID, name string, dueDate time.Time) (*Task, error) {
 
 type Task struct {
 	id             taskID
-	userID         userID
+	userID         UserID
 	name           string
 	status         taskStatus
 	dueDate        time.Time
@@ -46,7 +46,7 @@ func (t *Task) setID(id taskID) error {
 	return nil
 }
 
-func (t *Task) setUserID(id userID) error {
+func (t *Task) setUserID(id UserID) error {
 	if id == "" {
 		return fmt.Errorf("empty user id")
 	}

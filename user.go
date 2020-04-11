@@ -8,12 +8,12 @@ import (
 )
 
 type UserRepo interface {
-	NextID(context.Context) (userID, error)
+	NextID(context.Context) (UserID, error)
 	FindByEmail(context.Context, string) (*User, error)
 	Save(context.Context, *User) error
 }
 
-func NewUser(id userID, name, email string, password password) (*User, error) {
+func NewUser(id UserID, name, email string, password password) (*User, error) {
 	u := new(User)
 
 	if err := u.setID(id); err != nil {
@@ -36,14 +36,14 @@ func NewUser(id userID, name, email string, password password) (*User, error) {
 }
 
 type User struct {
-	id       userID
+	id       UserID
 	name     string
 	email    string
 	password password
 	status   userStatus
 }
 
-func (u *User) setID(id userID) error {
+func (u *User) setID(id UserID) error {
 	if id == "" {
 		return fmt.Errorf("empty id")
 	}
@@ -87,7 +87,7 @@ func (u *User) setPassword(pass password) error {
 	return nil
 }
 
-type userID string
+type UserID string
 
 type userStatus int
 
