@@ -20,6 +20,10 @@ type taskRepo struct {
 	tasks map[todo.TaskID]*todo.Task
 }
 
+func (r *taskRepo) NextID(context.Context) (todo.TaskID, error) {
+	return todo.TaskID(generateRandomString(50)), nil
+}
+
 func (r *taskRepo) Get(context.Context) ([]*todo.Task, error) {
 	if err := r.load(); err != nil {
 		return nil, fmt.Errorf("failed to load tasks: %w", err)
