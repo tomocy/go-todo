@@ -14,26 +14,25 @@ type UserRepo interface {
 }
 
 func NewUser(id userID, name, email string, password password) (*user, error) {
+	u := new(user)
+
+	if err := u.setID(id); err != nil {
+		return nil, err
+	}
 	if name == "" {
 		name = string(id)
 	}
-	if email == "" {
-		return nil, fmt.Errorf("empty email")
+	if err := u.setName(name); err != nil {
+		return nil, err
 	}
-	if password == "" {
-		return nil, fmt.Errorf("empty password")
+	if err := u.setEmail(email); err != nil {
+		return nil, err
+	}
+	if err := u.setPassword(password); err != nil {
+		return nil, err
 	}
 
-	return &user{
-		id:   id,
-		name: name,
-		profile: profile{
-			email: email,
-		},
-		cred: cred{
-			password: password,
-		},
-	}, nil
+	return u, nil
 }
 
 type user struct {
