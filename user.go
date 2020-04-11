@@ -73,6 +73,10 @@ func (u *user) setEmail(email string) error {
 	return nil
 }
 
+func (u *user) Password() password {
+	return u.password
+}
+
 func (u *user) setPassword(pass password) error {
 	if pass == "" {
 		return fmt.Errorf("empty password")
