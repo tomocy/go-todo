@@ -61,6 +61,17 @@ func (r *taskRepo) load() error {
 	return nil
 }
 
+func convertTask(src *todo.Task) *task {
+	return &task{
+		ID:             src.ID(),
+		UserID:         src.UserID(),
+		Name:           src.Name(),
+		Status:         src.Status(),
+		DueDate:        src.DueDate(),
+		PostponedTimes: src.PostponedTimes(),
+	}
+}
+
 type task struct {
 	ID             todo.TaskID     `json:"id"`
 	UserID         todo.UserID     `json:"user_id"`
