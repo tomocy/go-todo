@@ -7,11 +7,11 @@ import (
 )
 
 type TaskRepo interface {
-	NextID(context.Context) (taskID, error)
+	NextID(context.Context) (TaskID, error)
 	Save(context.Context, *Task) error
 }
 
-func NewTask(id taskID, userID UserID, name string, dueDate time.Time) (*Task, error) {
+func NewTask(id TaskID, userID UserID, name string, dueDate time.Time) (*Task, error) {
 	t := new(Task)
 
 	if err := t.setID(id); err != nil {
@@ -31,7 +31,7 @@ func NewTask(id taskID, userID UserID, name string, dueDate time.Time) (*Task, e
 }
 
 type Task struct {
-	id             taskID
+	id             TaskID
 	userID         UserID
 	name           string
 	status         taskStatus
@@ -39,7 +39,7 @@ type Task struct {
 	postponedTimes int
 }
 
-func (t *Task) setID(id taskID) error {
+func (t *Task) setID(id TaskID) error {
 	if id == "" {
 		return fmt.Errorf("empty id")
 	}
@@ -88,7 +88,7 @@ func (t *Task) postpone() error {
 	return nil
 }
 
-type taskID string
+type TaskID string
 
 type taskStatus int
 
