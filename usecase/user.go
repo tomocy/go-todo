@@ -38,17 +38,17 @@ type authenticateUser struct {
 	repo todo.UserRepo
 }
 
-func (u *authenticateUser) do(email, password string) error {
+func (u *authenticateUser) do(email, password string) (*todo.User, error) {
 	ctx := context.TODO()
 
 	user, err := u.repo.FindByEmail(ctx, email)
 	if err != nil {
-		return fmt.Errorf("failed to find user by email: %w", err)
+		return nil, fmt.Errorf("failed to find user by email: %w", err)
 	}
 
 	if !user.Password().IsSame(password) {
-		return fmt.Errorf("incorrect password")
+		return nil, fmt.Errorf("incorrect password")
 	}
 
-	return nil
+	return user, nil
 }
