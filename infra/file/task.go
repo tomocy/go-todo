@@ -35,6 +35,18 @@ func (r *taskRepo) Get(context.Context) ([]*todo.Task, error) {
 	return ts, nil
 }
 
+func (r *taskRepo) Find(_ context.Context, id todo.TaskID) (*todo.Task, error) {
+	if err := r.load(); err != nil {
+		return nil, fmt.Errorf("failed to load tasks: %w", err)
+	}
+
+	if t, ok := r.tasks[id]; ok {
+		return t, nil
+	}
+
+	return nil, fmt.Errorf("no such task")
+}
+
 func (r *taskRepo) load() error {
 	var ts []*task
 	if err := load(r.fname, ts); err != nil {
