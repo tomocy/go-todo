@@ -40,7 +40,7 @@ type User struct {
 	name     string
 	email    string
 	password Password
-	status   userStatus
+	status   UserStatus
 }
 
 func (u *User) ID() UserID {
@@ -101,10 +101,10 @@ func (u *User) setPassword(pass Password) error {
 
 type UserID string
 
-type userStatus int
+type UserStatus int
 
 const (
-	userActive userStatus = iota
+	userActive UserStatus = iota
 	userInactive
 )
 
