@@ -7,6 +7,12 @@ import (
 	"github.com/tomocy/go-todo"
 )
 
+func NewCreateUser(repo todo.UserRepo) *createUser {
+	return &createUser{
+		repo: repo,
+	}
+}
+
 type createUser struct {
 	repo todo.UserRepo
 }
