@@ -49,6 +49,25 @@ const (
 	repoMemory = "memory"
 )
 
+func (a *app) userRepo() todo.UserRepo {
+	repo, ok := os.LookupEnv(envRepo)
+	if !ok {
+		repo = repoMemory
+	}
+
+	switch repo {
+	case repoFile:
+		fname, ok := os.LookupEnv(envStatusFilename)
+		if !ok {
+			fname = "./"
+		}
+
+		return file.NewUserRepo(fname)
+	default:
+		return new(memory.UserRepo)
+	}
+}
+
 func (a *app) taskRepo() todo.TaskRepo {
 	repo, ok := os.LookupEnv(envRepo)
 	if !ok {
