@@ -58,3 +58,5 @@ type profile struct {
 type cred struct {
 	password string
 }
+
+type password string
