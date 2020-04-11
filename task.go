@@ -81,6 +81,10 @@ func (t *Task) setName(n string) error {
 	return nil
 }
 
+func (t *Task) DueDate() time.Time {
+	return t.dueDate
+}
+
 func (t *Task) setDueDate(d time.Time) error {
 	t.dueDate = d
 
