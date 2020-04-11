@@ -53,6 +53,10 @@ func (t *Task) setID(id TaskID) error {
 	return nil
 }
 
+func (t *Task) UserID() UserID {
+	return t.userID
+}
+
 func (t *Task) setUserID(id UserID) error {
 	if id == "" {
 		return fmt.Errorf("empty user id")
