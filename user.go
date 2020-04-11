@@ -103,6 +103,6 @@ func HashPassword(p string) (password, error) {
 
 type password string
 
-func (p password) isSame(other string) bool {
+func (p password) IsSame(other string) bool {
 	return bcrypt.CompareHashAndPassword([]byte(p), []byte(other)) == nil
 }
