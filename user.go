@@ -9,12 +9,12 @@ import (
 
 type UserRepo interface {
 	NextID(context.Context) (userID, error)
-	FindByEmail(context.Context, string) (*user, error)
-	Save(context.Context, *user) error
+	FindByEmail(context.Context, string) (*User, error)
+	Save(context.Context, *User) error
 }
 
-func NewUser(id userID, name, email string, password password) (*user, error) {
-	u := new(user)
+func NewUser(id userID, name, email string, password password) (*User, error) {
+	u := new(User)
 
 	if err := u.setID(id); err != nil {
 		return nil, err
@@ -35,7 +35,7 @@ func NewUser(id userID, name, email string, password password) (*user, error) {
 	return u, nil
 }
 
-type user struct {
+type User struct {
 	id       userID
 	name     string
 	email    string
@@ -43,7 +43,7 @@ type user struct {
 	status   userStatus
 }
 
-func (u *user) setID(id userID) error {
+func (u *User) setID(id userID) error {
 	if id == "" {
 		return fmt.Errorf("empty id")
 	}
@@ -53,7 +53,7 @@ func (u *user) setID(id userID) error {
 	return nil
 }
 
-func (u *user) setName(name string) error {
+func (u *User) setName(name string) error {
 	if name == "" {
 		return fmt.Errorf("empty name")
 	}
@@ -63,7 +63,7 @@ func (u *user) setName(name string) error {
 	return nil
 }
 
-func (u *user) setEmail(email string) error {
+func (u *User) setEmail(email string) error {
 	if email == "" {
 		return fmt.Errorf("empty email")
 	}
@@ -73,11 +73,11 @@ func (u *user) setEmail(email string) error {
 	return nil
 }
 
-func (u *user) Password() password {
+func (u *User) Password() password {
 	return u.password
 }
 
-func (u *user) setPassword(pass password) error {
+func (u *User) setPassword(pass password) error {
 	if pass == "" {
 		return fmt.Errorf("empty password")
 	}
