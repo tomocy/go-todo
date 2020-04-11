@@ -112,6 +112,10 @@ func (u *User) setPassword(pass Password) error {
 	return nil
 }
 
+func (u *User) Status() UserStatus {
+	return u.status
+}
+
 type UserID string
 
 type UserStatus int
