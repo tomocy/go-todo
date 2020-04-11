@@ -15,6 +15,20 @@ func (r *userRepo) NextID(context.Context) (todo.UserID, error) {
 	return todo.UserID(generateRandomString(30)), nil
 }
 
+func (r *userRepo) load() error {
+	s, err := load(r.fname)
+	if err != nil {
+		return err
+	}
+
+	for _, u := range s.Users {
+		adapted := u.adapt()
+		r.users[adapted.ID()] = adapted
+	}
+
+	return nil
+}
+
 type user struct {
 	ID       todo.UserID     `json:"id"`
 	Name     string          `json:"name"`
