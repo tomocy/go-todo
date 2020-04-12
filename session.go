@@ -1,6 +1,10 @@
 package todo
 
-type SessionRepo interface{}
+import "context"
+
+type SessionRepo interface {
+	NextID(context.Context) (SessionID, error)
+}
 
 func NewSession(id SessionID, userID UserID) *Session {
 	return &Session{
