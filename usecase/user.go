@@ -79,3 +79,5 @@ func (u *authenticateUser) Do(email, password string) (*todo.User, *todo.Session
 
 	return user, sess, nil
 }
+
+type deauthenticateUser struct{}
