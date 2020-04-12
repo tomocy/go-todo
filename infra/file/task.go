@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/tomocy/go-todo"
+	"github.com/tomocy/go-todo/infra/rand"
 )
 
 func NewTaskRepo(fname string) *taskRepo {
@@ -21,7 +22,7 @@ type taskRepo struct {
 }
 
 func (r *taskRepo) NextID(context.Context) (todo.TaskID, error) {
-	return todo.TaskID(generateRandomString(50)), nil
+	return todo.TaskID(rand.GenerateString(50)), nil
 }
 
 func (r *taskRepo) Get(context.Context) ([]*todo.Task, error) {

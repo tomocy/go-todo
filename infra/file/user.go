@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/tomocy/go-todo"
+	"github.com/tomocy/go-todo/infra/rand"
 )
 
 func NewUserRepo(fname string) *userRepo {
@@ -20,7 +21,7 @@ type userRepo struct {
 }
 
 func (r *userRepo) NextID(context.Context) (todo.UserID, error) {
-	return todo.UserID(generateRandomString(30)), nil
+	return todo.UserID(rand.GenerateString(30)), nil
 }
 
 func (r *userRepo) FindByEmail(_ context.Context, email string) (*todo.User, error) {
