@@ -1,6 +1,9 @@
 package todo
 
-import "context"
+import (
+	"context"
+	"fmt"
+)
 
 type SessionRepo interface {
 	NextID(context.Context) (SessionID, error)
@@ -21,6 +24,16 @@ type Session struct {
 
 func (s *Session) UserID() UserID {
 	return s.userID
+}
+
+func (s *Session) setUserID(id UserID) error {
+	if id == "" {
+		return fmt.Errorf("empty user id")
+	}
+
+	s.userID = id
+
+	return nil
 }
 
 type SessionID string
