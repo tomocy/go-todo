@@ -2,6 +2,7 @@ package cli
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/tomocy/go-todo"
@@ -74,3 +75,17 @@ func (a *app) postponeTask(ctx *cli.Context) error {
 }
 
 type task todo.Task
+
+func (t task) String() string {
+	var w strings.Builder
+	raw := todo.Task(t)
+
+	fmt.Fprintf(&w, "ID: %s\n", raw.ID())
+	fmt.Fprintf(&w, "Name: %s\n", raw.ID())
+	if !raw.DueDate().IsZero() {
+		fmt.Fprintf(&w, "DueDate: %s\n", raw.DueDate().Format("2006/01/02"))
+	}
+	fmt.Fprintf(&w, "PostponedTimes: %s", raw.ID())
+
+	return w.String()
+}
