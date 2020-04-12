@@ -72,6 +72,13 @@ func (u *createTask) Do(name string, dueDate time.Time) (*todo.Task, error) {
 	return task, nil
 }
 
+func NewChangeDueDate(taskRepo todo.TaskRepo, sessRepo todo.SessionRepo) *changeDueDate {
+	return &changeDueDate{
+		taskRepo: taskRepo,
+		sessRepo: sessRepo,
+	}
+}
+
 type changeDueDate struct {
 	taskRepo todo.TaskRepo
 	sessRepo todo.SessionRepo
