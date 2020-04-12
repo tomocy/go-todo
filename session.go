@@ -22,6 +22,16 @@ type Session struct {
 	userID UserID
 }
 
+func (s *Session) setID(id SessionID) error {
+	if id == "" {
+		return fmt.Errorf("empty id")
+	}
+
+	s.id = id
+
+	return nil
+}
+
 func (s *Session) UserID() UserID {
 	return s.userID
 }
