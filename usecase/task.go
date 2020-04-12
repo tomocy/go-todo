@@ -106,3 +106,5 @@ func (u *postponeTask) Do(id todo.TaskID) (*todo.Task, error) {
 
 	return task, nil
 }
+
+type deleteTask struct{}
