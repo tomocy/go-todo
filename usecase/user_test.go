@@ -29,6 +29,38 @@ func TestCreateUser(t *testing.T) {
 	}
 }
 
+func TestDeleteUser(t *testing.T) {
+	userRepo := new(memory.UserRepo)
+	sessRepo := memory.NewSessionRepo()
+
+	name, email, pass := "name", "email", "pass"
+
+	createUsecase := createUser{
+		repo: userRepo,
+	}
+	user, _ := createUsecase.Do(name, email, pass)
+
+	authenticateUsecase := authenticateUser{
+		userRepo: userRepo,
+		sessRepo: sessRepo,
+	}
+	authenticateUsecase.Do(email, pass)
+
+	u := deleteUser{
+		userRepo: userRepo,
+		sessRepo: sessRepo,
+	}
+	if err := u.Do(user.ID()); err != nil {
+		t.Errorf("should have deleted user: %s", err)
+		return
+	}
+
+	if _, err := sessRepo.Pull(context.Background()); err == nil {
+		t.Errorf("should have deleted session: %s", err)
+		return
+	}
+}
+
 func TestAuthenticateUser(t *testing.T) {
 	userRepo := new(memory.UserRepo)
 	createUsecase := createUser{

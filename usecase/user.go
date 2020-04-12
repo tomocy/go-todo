@@ -45,6 +45,20 @@ type deleteUser struct {
 	sessRepo todo.SessionRepo
 }
 
+func (u *deleteUser) Do(id todo.UserID) error {
+	ctx := context.TODO()
+
+	if err := u.userRepo.Delete(ctx, id); err != nil {
+		return err
+	}
+
+	if err := u.sessRepo.Delete(ctx); err != nil {
+		return fmt.Errorf("failed to delete session: %w", err)
+	}
+
+	return nil
+}
+
 func NewAuthenticateUser(userRepo todo.UserRepo, sessRepo todo.SessionRepo) *authenticateUser {
 	return &authenticateUser{
 		userRepo: userRepo,
