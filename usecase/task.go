@@ -29,9 +29,10 @@ func (u *getTasks) Do() ([]*todo.Task, error) {
 	return tasks, nil
 }
 
-func NewCreateTask(repo todo.TaskRepo) *createTask {
+func NewCreateTask(taskRepo todo.TaskRepo, sessRepo todo.SessionRepo) *createTask {
 	return &createTask{
-		taskRepo: repo,
+		taskRepo: taskRepo,
+		sessRepo: sessRepo,
 	}
 }
 
