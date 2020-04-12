@@ -50,6 +50,21 @@ func (a *app) init() {
 					},
 					Action: a.createUser,
 				},
+				{
+					Name:      "authenticate",
+					ShortName: "authn",
+					Flags: []cli.Flag{
+						cli.StringFlag{
+							Name:     "email",
+							Required: true,
+						},
+						cli.StringFlag{
+							Name:     "password",
+							Required: true,
+						},
+					},
+					Action: a.authenticateUser,
+				},
 			},
 		},
 		{

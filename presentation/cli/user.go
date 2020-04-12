@@ -23,3 +23,22 @@ func (a *app) createUser(ctx *cli.Context) error {
 
 	return nil
 }
+
+func (a *app) authenticateUser(ctx *cli.Context) error {
+	u := usecase.NewAuthenticateUser(a.userRepo(), a.sessionRepo())
+
+	var (
+		email = ctx.String("email")
+		pass  = ctx.String("password")
+	)
+
+	user, sess, err := u.Do(email, pass)
+	if err != nil {
+		return err
+	}
+
+	a.printf("%v\n", user)
+	a.printf("%v\n", sess)
+
+	return nil
+}
