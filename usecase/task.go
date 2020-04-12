@@ -111,6 +111,28 @@ type cancelDueDate struct {
 	sessRepo todo.SessionRepo
 }
 
+func (u *cancelDueDate) Do(id todo.TaskID) (*todo.Task, error) {
+	ctx := context.TODO()
+
+	if _, err := u.sessRepo.Pull(ctx); err != nil {
+		return nil, fmt.Errorf("failed to pull session: %w", err)
+	}
+
+	task, err := u.taskRepo.Find(ctx, id)
+	if err != nil {
+		return nil, fmt.Errorf("failed to find task: %w", err)
+	}
+	if err := task.CancelDueDate(); err != nil {
+		return nil, err
+	}
+
+	if err := u.taskRepo.Save(ctx, task); err != nil {
+		return nil, fmt.Errorf("failed to save task: %w", err)
+	}
+
+	return task, nil
+}
+
 func NewPostponeTask(taskRepo todo.TaskRepo, sessRepo todo.SessionRepo) *postponeTask {
 	return &postponeTask{
 		taskRepo: taskRepo,
