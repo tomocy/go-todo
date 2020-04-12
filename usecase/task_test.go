@@ -71,6 +71,39 @@ func TestCreateTask(t *testing.T) {
 	}
 }
 
+func TestChangeDueDate(t *testing.T) {
+	taskRepo := new(memory.TaskRepo)
+	sessRepo := memory.NewSessionRepo()
+
+	userID, name, dueDate := todo.UserID("user id"), "task", time.Time{}
+
+	sess, _ := todo.NewSession(todo.SessionID("session id"), userID)
+	sessRepo.Push(context.Background(), sess)
+
+	createUsecase := createTask{
+		taskRepo: taskRepo,
+		sessRepo: sessRepo,
+	}
+
+	task, _ := createUsecase.Do(name, dueDate)
+
+	dueDate, _ = time.Parse("2006/01/02", "2020/01/01")
+	u := changeDueDate{
+		taskRepo: taskRepo,
+		sessRepo: sessRepo,
+	}
+	task, err := u.Do(task.ID(), dueDate)
+	if err != nil {
+		t.Errorf("should have changed the due date: %s", err)
+		return
+	}
+
+	if !task.DueDate().Equal(dueDate) {
+		t.Errorf("should have returned the due date changed task: %s", reportUnexpected("due date", task.DueDate().Format("2006/01/02"), dueDate.Format("2006/01/02")))
+		return
+	}
+}
+
 func TestPostponeTask(t *testing.T) {
 	taskRepo := new(memory.TaskRepo)
 	sessRepo := memory.NewSessionRepo()
@@ -102,7 +135,6 @@ func TestPostponeTask(t *testing.T) {
 		return
 	}
 }
-
 func TestDeleteTask(t *testing.T) {
 	taskRepo := new(memory.TaskRepo)
 	sessRepo := memory.NewSessionRepo()
