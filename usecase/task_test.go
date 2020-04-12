@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"context"
 	"testing"
 	"time"
 
@@ -9,7 +10,11 @@ import (
 )
 
 func TestGetTasks(t *testing.T) {
-	repo := new(memory.TaskRepo)
+	taskRepo := new(memory.TaskRepo)
+	sessRepo := memory.NewSessionRepo()
+
+	sess, _ := todo.NewSession(todo.SessionID("session id"), todo.UserID("user id"))
+	sessRepo.Push(context.Background(), sess)
 
 	ts := []struct {
 		userID  todo.UserID
@@ -18,14 +23,15 @@ func TestGetTasks(t *testing.T) {
 	}{}
 
 	createUsecase := createTask{
-		repo: repo,
+		taskRepo: taskRepo,
+		sessRepo: sessRepo,
 	}
 	for _, t := range ts {
-		createUsecase.do(t.userID, t.name, t.dueDate)
+		createUsecase.do(t.name, t.dueDate)
 	}
 
 	u := getTasks{
-		repo: repo,
+		repo: taskRepo,
 	}
 	tasks, err := u.Do()
 	if err != nil {
@@ -40,14 +46,19 @@ func TestGetTasks(t *testing.T) {
 }
 
 func TestCreateTask(t *testing.T) {
-	repo := new(memory.TaskRepo)
+	taskRepo := new(memory.TaskRepo)
+	sessRepo := memory.NewSessionRepo()
 	u := createTask{
-		repo: repo,
+		taskRepo: taskRepo,
+		sessRepo: sessRepo,
 	}
 
 	userID, name, dueDate := todo.UserID("user id"), "task", time.Time{}
 
-	task, err := u.do(userID, name, dueDate)
+	sess, _ := todo.NewSession(todo.SessionID("session id"), userID)
+	sessRepo.Push(context.Background(), sess)
+
+	task, err := u.do(name, dueDate)
 	if err != nil {
 		t.Errorf("should have created task: %s", err)
 		return
@@ -60,15 +71,23 @@ func TestCreateTask(t *testing.T) {
 }
 
 func TestPostponeTask(t *testing.T) {
-	repo := new(memory.TaskRepo)
+	taskRepo := new(memory.TaskRepo)
+	sessRepo := memory.NewSessionRepo()
 
 	createUsecase := createTask{
-		repo: repo,
+		taskRepo: taskRepo,
+		sessRepo: sessRepo,
 	}
-	task, _ := createUsecase.do("user id", "name", time.Time{})
+
+	userID, name, dueDate := todo.UserID("user id"), "task", time.Time{}
+
+	sess, _ := todo.NewSession(todo.SessionID("session id"), userID)
+	sessRepo.Push(context.Background(), sess)
+
+	task, _ := createUsecase.do(name, dueDate)
 
 	u := postponeTask{
-		repo: repo,
+		repo: taskRepo,
 	}
 	task, err := u.do(task.ID())
 	if err != nil {
