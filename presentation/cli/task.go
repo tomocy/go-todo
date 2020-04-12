@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/tomocy/go-todo"
 	"github.com/tomocy/go-todo/usecase"
 	"github.com/urfave/cli"
 )
@@ -48,6 +49,21 @@ func (a *app) createTask(ctx *cli.Context) error {
 	}
 
 	task, err := u.Do(name, dueDate)
+	if err != nil {
+		return err
+	}
+
+	a.printf("%v\n", task)
+
+	return nil
+}
+
+func (a *app) postponeTask(ctx *cli.Context) error {
+	u := usecase.NewPostponeTask(a.taskRepo(), a.sessionRepo())
+
+	id := todo.TaskID(ctx.String("id"))
+
+	task, err := u.Do(id)
 	if err != nil {
 		return err
 	}

@@ -88,6 +88,16 @@ func (a *app) init() {
 					},
 					Action: a.createTask,
 				},
+				{
+					Name: "postpone",
+					Flags: []cli.Flag{
+						cli.StringFlag{
+							Name:     "id",
+							Required: true,
+						},
+					},
+					Action: a.postponeTask,
+				},
 			},
 		},
 	}
