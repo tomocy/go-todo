@@ -42,6 +42,7 @@ func (u *createUser) Do(name, email, password string) (*todo.User, error) {
 
 type deleteUser struct {
 	userRepo todo.UserRepo
+	sessRepo todo.SessionRepo
 }
 
 func NewAuthenticateUser(userRepo todo.UserRepo, sessRepo todo.SessionRepo) *authenticateUser {
