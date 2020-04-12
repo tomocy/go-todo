@@ -10,7 +10,7 @@ import (
 )
 
 func TestGetTasks(t *testing.T) {
-	taskRepo := new(memory.TaskRepo)
+	taskRepo := memory.NewTaskRepo()
 	sessRepo := memory.NewSessionRepo()
 
 	sess, _ := todo.NewSession(todo.SessionID("session id"), todo.UserID("user id"))
@@ -47,7 +47,7 @@ func TestGetTasks(t *testing.T) {
 }
 
 func TestCreateTask(t *testing.T) {
-	taskRepo := new(memory.TaskRepo)
+	taskRepo := memory.NewTaskRepo()
 	sessRepo := memory.NewSessionRepo()
 	u := createTask{
 		taskRepo: taskRepo,
@@ -72,7 +72,7 @@ func TestCreateTask(t *testing.T) {
 }
 
 func TestChangeDueDate(t *testing.T) {
-	taskRepo := new(memory.TaskRepo)
+	taskRepo := memory.NewTaskRepo()
 	sessRepo := memory.NewSessionRepo()
 
 	userID, name, dueDate := todo.UserID("user id"), "task", time.Time{}
@@ -105,7 +105,7 @@ func TestChangeDueDate(t *testing.T) {
 }
 
 func TestCancelDueDate(t *testing.T) {
-	taskRepo := new(memory.TaskRepo)
+	taskRepo := memory.NewTaskRepo()
 	sessRepo := memory.NewSessionRepo()
 
 	userID, name := todo.UserID("user id"), "task"
@@ -137,7 +137,7 @@ func TestCancelDueDate(t *testing.T) {
 	}
 }
 func TestPostponeTask(t *testing.T) {
-	taskRepo := new(memory.TaskRepo)
+	taskRepo := memory.NewTaskRepo()
 	sessRepo := memory.NewSessionRepo()
 
 	createUsecase := createTask{
@@ -168,7 +168,7 @@ func TestPostponeTask(t *testing.T) {
 	}
 }
 func TestDeleteTask(t *testing.T) {
-	taskRepo := new(memory.TaskRepo)
+	taskRepo := memory.NewTaskRepo()
 	sessRepo := memory.NewSessionRepo()
 
 	userID, name, dueDate := todo.UserID("user id"), "task", time.Time{}

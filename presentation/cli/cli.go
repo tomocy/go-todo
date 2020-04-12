@@ -225,6 +225,6 @@ func (a *app) taskRepo() todo.TaskRepo {
 
 		return file.NewTaskRepo(fname)
 	default:
-		return new(memory.TaskRepo)
+		return memory.NewTaskRepo()
 	}
 }
