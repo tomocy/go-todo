@@ -106,6 +106,10 @@ func (t *Task) DueDate() time.Time {
 	return t.dueDate
 }
 
+func (t *Task) ChangeDueDate(d time.Time) error {
+	return t.setDueDate(d)
+}
+
 func (t *Task) setDueDate(d time.Time) error {
 	t.dueDate = d
 
