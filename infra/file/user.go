@@ -11,13 +11,11 @@ import (
 func NewUserRepo(fname string) *userRepo {
 	return &userRepo{
 		fname: fname,
-		users: make(map[todo.UserID]*todo.User),
 	}
 }
 
 type userRepo struct {
 	fname string
-	users map[todo.UserID]*todo.User
 }
 
 func (r *userRepo) NextID(context.Context) (todo.UserID, error) {
@@ -25,35 +23,30 @@ func (r *userRepo) NextID(context.Context) (todo.UserID, error) {
 }
 
 func (r *userRepo) FindByEmail(_ context.Context, email string) (*todo.User, error) {
-	if err := r.load(); err != nil {
-		return nil, fmt.Errorf("failed to load users: %w", err)
+	s, err := load(r.fname)
+	if err != nil {
+		return nil, fmt.Errorf("failed to load tasks: %w", err)
 	}
 
-	for _, u := range r.users {
-		if u.Email() == email {
-			return u, nil
+	for _, u := range s.Users {
+		if u.Email == email {
+			return u.adapt(), nil
 		}
 	}
 
 	return nil, fmt.Errorf("no such user")
 }
 
-func (r *userRepo) load() error {
+func (r *userRepo) Save(_ context.Context, u *todo.User) error {
 	s, err := load(r.fname)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to load tasks: %w", err)
 	}
 
-	for _, u := range s.Users {
-		adapted := u.adapt()
-		r.users[adapted.ID()] = adapted
-	}
+	converted := convertUser(u)
+	s.addUser(converted)
 
-	return nil
-}
-
-func (r *userRepo) Save(_ context.Context, u *todo.User) error {
-	return r.save(u)
+	return save(r.fname, s)
 }
 
 func (r *userRepo) Delete(_ context.Context, id todo.UserID) error {
@@ -75,18 +68,6 @@ func (r *userRepo) Delete(_ context.Context, id todo.UserID) error {
 	}
 
 	return nil
-}
-
-func (r *userRepo) save(u *todo.User) error {
-	s, err := load(r.fname)
-	if err != nil {
-		return fmt.Errorf("failed to load: %w", err)
-	}
-
-	converted := convertUser(u)
-	s.addUser(converted)
-
-	return save(r.fname, s)
 }
 
 func convertUser(src *todo.User) *user {
