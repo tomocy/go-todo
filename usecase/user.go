@@ -40,6 +40,13 @@ func (u *createUser) Do(name, email, password string) (*todo.User, error) {
 	return user, nil
 }
 
+func NewDeleteUser(userRepo todo.UserRepo, sessRepo todo.SessionRepo) *deleteUser {
+	return &deleteUser{
+		userRepo: userRepo,
+		sessRepo: sessRepo,
+	}
+}
+
 type deleteUser struct {
 	userRepo todo.UserRepo
 	sessRepo todo.SessionRepo
