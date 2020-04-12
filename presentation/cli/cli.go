@@ -104,6 +104,26 @@ func (a *app) init() {
 					Action: a.createTask,
 				},
 				{
+					Name: "due-date",
+					Subcommands: []cli.Command{
+						{
+							Name: "change",
+							Flags: []cli.Flag{
+								cli.StringFlag{
+									Name:     "id",
+									Required: true,
+								},
+								cli.StringFlag{
+									Name:     "due-date",
+									Usage:    "due date of task. the format should be 2006/01/02",
+									Required: true,
+								},
+							},
+							Action: a.changeDueDate,
+						},
+					},
+				},
+				{
 					Name: "postpone",
 					Flags: []cli.Flag{
 						cli.StringFlag{

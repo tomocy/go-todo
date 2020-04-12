@@ -63,6 +63,29 @@ func (a *app) createTask(ctx *cli.Context) error {
 	return nil
 }
 
+func (a *app) changeDueDate(ctx *cli.Context) error {
+	u := usecase.NewChangeDueDate(a.taskRepo(), a.sessionRepo())
+
+	var (
+		id         = todo.TaskID(ctx.String("id"))
+		rawDueDate = ctx.String("due-date")
+	)
+	dueDate, err := time.Parse("2006/01/02", rawDueDate)
+	if err != nil {
+		return fmt.Errorf("failed to parse due date: %w", err)
+	}
+
+	raw, err := u.Do(id, dueDate)
+	if err != nil {
+		return err
+	}
+
+	a.printf("Task is successfully configured.\n\n")
+	a.printf("%v\n", task(*raw))
+
+	return nil
+}
+
 func (a *app) postponeTask(ctx *cli.Context) error {
 	u := usecase.NewPostponeTask(a.taskRepo(), a.sessionRepo())
 
