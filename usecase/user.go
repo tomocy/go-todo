@@ -40,6 +40,12 @@ func (u *createUser) Do(name, email, password string) (*todo.User, error) {
 	return user, nil
 }
 
+func NewAuthenticateUser(repo todo.UserRepo) *authenticateUser {
+	return &authenticateUser{
+		repo: repo,
+	}
+}
+
 type authenticateUser struct {
 	repo todo.UserRepo
 }
