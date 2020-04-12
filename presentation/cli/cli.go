@@ -95,6 +95,25 @@ func (a *app) userRepo() todo.UserRepo {
 	}
 }
 
+func (a *app) sessionRepo() todo.SessionRepo {
+	repo, ok := os.LookupEnv(envRepo)
+	if !ok {
+		repo = repoMemory
+	}
+
+	switch repo {
+	case repoFile:
+		fname, ok := os.LookupEnv(envStatusFilename)
+		if !ok {
+			fname = "./"
+		}
+
+		return file.NewSessionRepo(fname)
+	default:
+		return memory.NewSessionRepo()
+	}
+}
+
 func (a *app) taskRepo() todo.TaskRepo {
 	repo, ok := os.LookupEnv(envRepo)
 	if !ok {
