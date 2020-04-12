@@ -7,6 +7,7 @@ func NewSession(userID UserID) *Session {
 }
 
 type Session struct {
+	id     SessionID
 	userID UserID
 }
 
