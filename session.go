@@ -5,7 +5,7 @@ import "context"
 type SessionRepo interface {
 	NextID(context.Context) (SessionID, error)
 	Pull(context.Context) (*Session, error)
-	Save(context.Context, *Session) error
+	Push(context.Context, *Session) error
 }
 
 func NewSession(id SessionID, userID UserID) *Session {
