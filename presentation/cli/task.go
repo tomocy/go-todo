@@ -23,9 +23,9 @@ func (a *app) getTasks(ctx *cli.Context) error {
 		return nil
 	}
 
-	a.printf("TODOs\n")
+	a.printf("TODOs\n\n")
 	for _, t := range tasks {
-		a.printf("%v\n", t)
+		a.printf("%v\n", task(*t))
 	}
 
 	return nil
@@ -49,12 +49,13 @@ func (a *app) createTask(ctx *cli.Context) error {
 		}
 	}
 
-	task, err := u.Do(name, dueDate)
+	raw, err := u.Do(name, dueDate)
 	if err != nil {
 		return err
 	}
 
-	a.printf("%v\n", task)
+	a.printf("Task is successfully created.\n\n")
+	a.printf("%v\n", task(*raw))
 
 	return nil
 }
@@ -64,12 +65,13 @@ func (a *app) postponeTask(ctx *cli.Context) error {
 
 	id := todo.TaskID(ctx.String("id"))
 
-	task, err := u.Do(id)
+	raw, err := u.Do(id)
 	if err != nil {
 		return err
 	}
 
-	a.printf("%v\n", task)
+	a.printf("Task is successfully postponed.\n\n")
+	a.printf("%v\n", task(*raw))
 
 	return nil
 }
