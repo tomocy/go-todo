@@ -109,4 +109,5 @@ func (u *postponeTask) Do(id todo.TaskID) (*todo.Task, error) {
 
 type deleteTask struct {
 	taskRepo todo.TaskRepo
+	sessRepo todo.SessionRepo
 }
