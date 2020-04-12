@@ -40,9 +40,10 @@ func (u *createUser) Do(name, email, password string) (*todo.User, error) {
 	return user, nil
 }
 
-func NewAuthenticateUser(repo todo.UserRepo) *authenticateUser {
+func NewAuthenticateUser(userRepo todo.UserRepo, sessRepo todo.SessionRepo) *authenticateUser {
 	return &authenticateUser{
-		userRepo: repo,
+		userRepo: userRepo,
+		sessRepo: sessRepo,
 	}
 }
 
