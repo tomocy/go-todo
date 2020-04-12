@@ -16,5 +16,6 @@ func (r *sessionRepo) NextID(context.Context) (todo.SessionID, error) {
 }
 
 type session struct {
-	ID todo.SessionID `json:"id"`
+	ID     todo.SessionID `json:"id"`
+	UserID todo.UserID    `json:"user_id"`
 }
