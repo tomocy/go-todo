@@ -24,6 +24,13 @@ func NewSession(id SessionID, userID UserID) (*Session, error) {
 	return s, nil
 }
 
+func RecoverSession(id SessionID, userID UserID) *Session {
+	return &Session{
+		id:     id,
+		userID: userID,
+	}
+}
+
 type Session struct {
 	id     SessionID
 	userID UserID
