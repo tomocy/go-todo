@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"github.com/tomocy/go-todo"
 	"github.com/tomocy/go-todo/usecase"
 	"github.com/urfave/cli"
 )
@@ -42,3 +43,5 @@ func (a *app) authenticateUser(ctx *cli.Context) error {
 
 	return nil
 }
+
+type user todo.User
