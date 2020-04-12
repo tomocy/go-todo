@@ -72,6 +72,27 @@ func (r *taskRepo) Save(_ context.Context, t *todo.Task) error {
 	return r.save(t)
 }
 
+func (r *taskRepo) Delete(_ context.Context, id todo.TaskID) error {
+	s, err := load(r.fname)
+	if err != nil {
+		return fmt.Errorf("failed to load tasks: %w", err)
+	}
+
+	for i, t := range s.Tasks {
+		if t.ID != id {
+			continue
+		}
+
+		s.Tasks = append(s.Tasks[:i], s.Tasks[i+1:]...)
+	}
+
+	if err := save(r.fname, s); err != nil {
+		return fmt.Errorf("failed to save tasks: %w", err)
+	}
+
+	return nil
+}
+
 func (r *taskRepo) save(t *todo.Task) error {
 	s, err := load(r.fname)
 	if err != nil {
