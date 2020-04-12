@@ -8,9 +8,10 @@ import (
 	"github.com/tomocy/go-todo"
 )
 
-func NewGetTasks(repo todo.TaskRepo) *getTasks {
+func NewGetTasks(taskRepo todo.TaskRepo, sessRepo todo.SessionRepo) *getTasks {
 	return &getTasks{
-		taskRepo: repo,
+		taskRepo: taskRepo,
+		sessRepo: sessRepo,
 	}
 }
 
