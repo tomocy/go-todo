@@ -31,7 +31,8 @@ func TestGetTasks(t *testing.T) {
 	}
 
 	u := getTasks{
-		repo: taskRepo,
+		taskRepo: taskRepo,
+		sessRepo: sessRepo,
 	}
 	tasks, err := u.Do()
 	if err != nil {

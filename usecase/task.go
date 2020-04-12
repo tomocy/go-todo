@@ -10,18 +10,24 @@ import (
 
 func NewGetTasks(repo todo.TaskRepo) *getTasks {
 	return &getTasks{
-		repo: repo,
+		taskRepo: repo,
 	}
 }
 
 type getTasks struct {
-	repo todo.TaskRepo
+	taskRepo todo.TaskRepo
+	sessRepo todo.SessionRepo
 }
 
 func (u *getTasks) Do() ([]*todo.Task, error) {
 	ctx := context.TODO()
 
-	tasks, err := u.repo.Get(ctx)
+	sess, err := u.sessRepo.Pull(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("failed to pull session: %w", err)
+	}
+
+	tasks, err := u.taskRepo.Get(ctx, sess.UserID())
 	if err != nil {
 		return nil, fmt.Errorf("failed to get tasks: %w", err)
 	}
