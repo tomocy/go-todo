@@ -18,12 +18,13 @@ func (a *app) createUser(ctx *cli.Context) error {
 		pass  = ctx.String("password")
 	)
 
-	user, err := u.Do(name, email, pass)
+	raw, err := u.Do(name, email, pass)
 	if err != nil {
 		return err
 	}
 
-	a.printf("%v\n", user)
+	a.printf("User is successfully created.\n\n")
+	a.printf("%v\n", user(*raw))
 
 	return nil
 }
@@ -36,13 +37,13 @@ func (a *app) authenticateUser(ctx *cli.Context) error {
 		pass  = ctx.String("password")
 	)
 
-	user, sess, err := u.Do(email, pass)
+	raw, _, err := u.Do(email, pass)
 	if err != nil {
 		return err
 	}
 
-	a.printf("%v\n", user)
-	a.printf("%v\n", sess)
+	a.printf("User is successfully authenticated.\n\n")
+	a.printf("%v\n", user(*raw))
 
 	return nil
 }
