@@ -74,6 +74,20 @@ func (a *app) init() {
 					Name:   "get",
 					Action: a.getTasks,
 				},
+				{
+					Name: "create",
+					Flags: []cli.Flag{
+						cli.StringFlag{
+							Name:     "name",
+							Required: true,
+						},
+						cli.StringFlag{
+							Name:  "due-date",
+							Usage: "due date of task. the format should be 2006/01/02",
+						},
+					},
+					Action: a.createTask,
+				},
 			},
 		},
 	}
