@@ -12,64 +12,60 @@ import (
 func NewTaskRepo(fname string) *taskRepo {
 	return &taskRepo{
 		fname: fname,
-		tasks: make(map[todo.TaskID]*todo.Task),
 	}
 }
 
 type taskRepo struct {
 	fname string
-	tasks map[todo.TaskID]*todo.Task
 }
 
 func (r *taskRepo) NextID(context.Context) (todo.TaskID, error) {
 	return todo.TaskID(rand.GenerateString(50)), nil
 }
 
-func (r *taskRepo) Get(_ context.Context, uid todo.UserID) ([]*todo.Task, error) {
-	if err := r.load(); err != nil {
+func (r *taskRepo) Get(_ context.Context, userID todo.UserID) ([]*todo.Task, error) {
+	s, err := load(r.fname)
+	if err != nil {
 		return nil, fmt.Errorf("failed to load tasks: %w", err)
 	}
 
-	ts := make([]*todo.Task, 0, len(r.tasks))
-	for _, t := range r.tasks {
-		if t.UserID() != uid {
+	ts := make([]*todo.Task, 0, len(s.Tasks))
+	for _, t := range s.Tasks {
+		if t.UserID != userID {
 			continue
 		}
 
-		ts = append(ts, t)
+		ts = append(ts, t.adapt())
 	}
 
 	return ts, nil
 }
 
 func (r *taskRepo) Find(_ context.Context, id todo.TaskID) (*todo.Task, error) {
-	if err := r.load(); err != nil {
+	s, err := load(r.fname)
+	if err != nil {
 		return nil, fmt.Errorf("failed to load tasks: %w", err)
 	}
 
-	if t, ok := r.tasks[id]; ok {
-		return t, nil
+	for _, t := range s.Tasks {
+		if t.ID == id {
+			return t.adapt(), nil
+		}
 	}
 
 	return nil, fmt.Errorf("no such task")
 }
 
-func (r *taskRepo) load() error {
+func (r *taskRepo) Save(_ context.Context, t *todo.Task) error {
 	s, err := load(r.fname)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to load tasks: %w", err)
 	}
 
-	for _, t := range s.Tasks {
-		adapted := t.adapt()
-		r.tasks[adapted.ID()] = adapted
-	}
+	converted := convertTask(t)
+	s.addTask(converted)
 
-	return nil
-}
-
-func (r *taskRepo) Save(_ context.Context, t *todo.Task) error {
-	return r.save(t)
+	return save(r.fname, s)
 }
 
 func (r *taskRepo) Delete(_ context.Context, id todo.TaskID) error {
@@ -91,18 +87,6 @@ func (r *taskRepo) Delete(_ context.Context, id todo.TaskID) error {
 	}
 
 	return nil
-}
-
-func (r *taskRepo) save(t *todo.Task) error {
-	s, err := load(r.fname)
-	if err != nil {
-		return fmt.Errorf("failed to load status: %w", err)
-	}
-
-	converted := convertTask(t)
-	s.addTask(converted)
-
-	return save(r.fname, s)
 }
 
 func convertTask(src *todo.Task) *task {
