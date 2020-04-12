@@ -106,6 +106,13 @@ func (u *changeDueDate) Do(id todo.TaskID, dueDate time.Time) (*todo.Task, error
 	return task, nil
 }
 
+func NewCancelDueDate(taskRepo todo.TaskRepo, sessRepo todo.SessionRepo) *cancelDueDate {
+	return &cancelDueDate{
+		taskRepo: taskRepo,
+		sessRepo: sessRepo,
+	}
+}
+
 type cancelDueDate struct {
 	taskRepo todo.TaskRepo
 	sessRepo todo.SessionRepo
