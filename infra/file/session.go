@@ -8,6 +8,12 @@ import (
 	"github.com/tomocy/go-todo/infra/rand"
 )
 
+func NewSessionRepo(fname string) *sessionRepo {
+	return &sessionRepo{
+		fname: fname,
+	}
+}
+
 type sessionRepo struct {
 	fname string
 }
