@@ -11,6 +11,7 @@ type TaskRepo interface {
 	Get(context.Context, UserID) ([]*Task, error)
 	Find(context.Context, TaskID) (*Task, error)
 	Save(context.Context, *Task) error
+	Delete(context.Context, TaskID) error
 }
 
 func NewTask(id TaskID, userID UserID, name string, dueDate time.Time) (*Task, error) {
