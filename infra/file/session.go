@@ -19,3 +19,7 @@ type session struct {
 	ID     todo.SessionID `json:"id"`
 	UserID todo.UserID    `json:"user_id"`
 }
+
+func (s *session) adapt() *todo.Session {
+	return todo.RecoverSession(s.ID, s.UserID)
+}
