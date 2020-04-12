@@ -15,4 +15,6 @@ func (r *sessionRepo) NextID(context.Context) (todo.SessionID, error) {
 	return todo.SessionID(rand.GenerateString(30)), nil
 }
 
-type session struct{}
+type session struct {
+	ID todo.SessionID `json:"id"`
+}
