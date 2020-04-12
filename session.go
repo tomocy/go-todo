@@ -36,6 +36,10 @@ type Session struct {
 	userID UserID
 }
 
+func (s *Session) ID() SessionID {
+	return s.id
+}
+
 func (s *Session) setID(id SessionID) error {
 	if id == "" {
 		return fmt.Errorf("empty id")
