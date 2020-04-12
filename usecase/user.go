@@ -50,7 +50,7 @@ type authenticateUser struct {
 	repo todo.UserRepo
 }
 
-func (u *authenticateUser) do(email, password string) (*todo.User, error) {
+func (u *authenticateUser) Do(email, password string) (*todo.User, error) {
 	ctx := context.TODO()
 
 	user, err := u.repo.FindByEmail(ctx, email)

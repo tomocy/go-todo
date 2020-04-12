@@ -41,7 +41,7 @@ func TestAuthenticateUser(t *testing.T) {
 		repo: repo,
 	}
 
-	user, err := u.do(email, pass)
+	user, err := u.Do(email, pass)
 	if err != nil {
 		t.Errorf("should have authenticated user: %s", err)
 		return
