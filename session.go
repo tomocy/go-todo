@@ -1,6 +1,6 @@
 package todo
 
-func NewSession(userID UserID) *Session {
+func NewSession(id SessionID, userID UserID) *Session {
 	return &Session{
 		userID: userID,
 	}
