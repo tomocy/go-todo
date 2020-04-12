@@ -27,7 +27,7 @@ func TestGetTasks(t *testing.T) {
 		sessRepo: sessRepo,
 	}
 	for _, t := range ts {
-		createUsecase.do(t.name, t.dueDate)
+		createUsecase.Do(t.name, t.dueDate)
 	}
 
 	u := getTasks{
@@ -58,7 +58,7 @@ func TestCreateTask(t *testing.T) {
 	sess, _ := todo.NewSession(todo.SessionID("session id"), userID)
 	sessRepo.Push(context.Background(), sess)
 
-	task, err := u.do(name, dueDate)
+	task, err := u.Do(name, dueDate)
 	if err != nil {
 		t.Errorf("should have created task: %s", err)
 		return
@@ -84,7 +84,7 @@ func TestPostponeTask(t *testing.T) {
 	sess, _ := todo.NewSession(todo.SessionID("session id"), userID)
 	sessRepo.Push(context.Background(), sess)
 
-	task, _ := createUsecase.do(name, dueDate)
+	task, _ := createUsecase.Do(name, dueDate)
 
 	u := postponeTask{
 		repo: taskRepo,

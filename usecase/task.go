@@ -41,7 +41,7 @@ type createTask struct {
 	sessRepo todo.SessionRepo
 }
 
-func (u *createTask) do(name string, dueDate time.Time) (*todo.Task, error) {
+func (u *createTask) Do(name string, dueDate time.Time) (*todo.Task, error) {
 	ctx := context.Background()
 
 	sess, err := u.sessRepo.Pull(ctx)
