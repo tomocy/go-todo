@@ -1,3 +1,5 @@
 package file
 
-type sessionRepo struct{}
+type sessionRepo struct {
+	fname string
+}
