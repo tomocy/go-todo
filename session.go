@@ -1,5 +1,11 @@
 package todo
 
+func NewSession(userID UserID) *Session {
+	return &Session{
+		userID: userID,
+	}
+}
+
 type Session struct {
 	userID UserID
 }
