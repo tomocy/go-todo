@@ -1,3 +1,7 @@
 package memory
 
-type sessionRepo struct{}
+import "github.com/tomocy/go-todo"
+
+type sessionRepo struct {
+	sess *todo.Session
+}
