@@ -91,7 +91,7 @@ func TestPostponeTask(t *testing.T) {
 		taskRepo: taskRepo,
 		sessRepo: sessRepo,
 	}
-	task, err := u.do(task.ID())
+	task, err := u.Do(task.ID())
 	if err != nil {
 		t.Errorf("should have postponed task: %s", err)
 		return

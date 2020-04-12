@@ -84,7 +84,7 @@ type postponeTask struct {
 	sessRepo todo.SessionRepo
 }
 
-func (u *postponeTask) do(id todo.TaskID) (*todo.Task, error) {
+func (u *postponeTask) Do(id todo.TaskID) (*todo.Task, error) {
 	ctx := context.TODO()
 
 	if _, err := u.sessRepo.Pull(ctx); err != nil {
