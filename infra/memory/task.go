@@ -49,6 +49,14 @@ func (r *TaskRepo) Save(_ context.Context, t *todo.Task) error {
 	return nil
 }
 
+func (r *TaskRepo) Delete(_ context.Context, id todo.TaskID) error {
+	r.initIfNecessary()
+
+	delete(r.tasks, id)
+
+	return nil
+}
+
 func (r *TaskRepo) initIfNecessary() {
 	if r.tasks == nil {
 		r.tasks = make(map[todo.TaskID]*todo.Task)
