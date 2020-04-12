@@ -29,6 +29,20 @@ func (a *app) createUser(ctx *cli.Context) error {
 	return nil
 }
 
+func (a *app) deleteUser(ctx *cli.Context) error {
+	u := usecase.NewDeleteUser(a.userRepo(), a.sessionRepo())
+
+	id := todo.UserID(ctx.String("id"))
+
+	if err := u.Do(id); err != nil {
+		return err
+	}
+
+	a.printf("User is successfully deleted.\n")
+
+	return nil
+}
+
 func (a *app) authenticateUser(ctx *cli.Context) error {
 	u := usecase.NewAuthenticateUser(a.userRepo(), a.sessionRepo())
 

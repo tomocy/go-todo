@@ -51,6 +51,16 @@ func (a *app) init() {
 					Action: a.createUser,
 				},
 				{
+					Name: "delete",
+					Flags: []cli.Flag{
+						cli.StringFlag{
+							Name:     "id",
+							Required: true,
+						},
+					},
+					Action: a.deleteUser,
+				},
+				{
 					Name:      "authenticate",
 					ShortName: "authn",
 					Flags: []cli.Flag{
