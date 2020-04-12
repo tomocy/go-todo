@@ -16,14 +16,16 @@ func (r *TaskRepo) NextID(context.Context) (todo.TaskID, error) {
 	return todo.TaskID(rand.GenerateString(50)), nil
 }
 
-func (r *TaskRepo) Get(context.Context) ([]*todo.Task, error) {
+func (r *TaskRepo) Get(_ context.Context, uid todo.UserID) ([]*todo.Task, error) {
 	r.initIfNecessary()
 
-	ts := make([]*todo.Task, len(r.tasks))
-	var i int
+	ts := make([]*todo.Task, 0, len(r.tasks))
 	for _, t := range r.tasks {
-		ts[i] = t
-		i++
+		if t.UserID() != uid {
+			continue
+		}
+
+		ts = append(ts, t)
 	}
 
 	return ts, nil
