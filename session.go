@@ -1,5 +1,7 @@
 package todo
 
+type SessionRepo interface{}
+
 func NewSession(id SessionID, userID UserID) *Session {
 	return &Session{
 		userID: userID,
