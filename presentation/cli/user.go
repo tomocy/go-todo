@@ -1,6 +1,9 @@
 package cli
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/tomocy/go-todo"
 	"github.com/tomocy/go-todo/usecase"
 	"github.com/urfave/cli"
@@ -45,3 +48,14 @@ func (a *app) authenticateUser(ctx *cli.Context) error {
 }
 
 type user todo.User
+
+func (u user) String() string {
+	var w strings.Builder
+	raw := todo.User(u)
+
+	fmt.Fprintf(&w, "ID: %s\n", raw.ID())
+	fmt.Fprintf(&w, "Name: %s\n", raw.Name())
+	fmt.Fprintf(&w, "Email: %s", raw.Email())
+
+	return w.String()
+}
