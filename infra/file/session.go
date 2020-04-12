@@ -53,6 +53,17 @@ func convertSession(src *todo.Session) *session {
 	}
 }
 
+func (r *sessionRepo) Delete(context.Context) error {
+	s, err := load(r.fname)
+	if err != nil {
+		return fmt.Errorf("failed to load session: %w", err)
+	}
+
+	s.Session = nil
+
+	return save(r.fname, s)
+}
+
 type session struct {
 	ID     todo.SessionID `json:"id"`
 	UserID todo.UserID    `json:"user_id"`
