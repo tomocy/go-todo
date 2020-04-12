@@ -72,3 +72,5 @@ func (a *app) postponeTask(ctx *cli.Context) error {
 
 	return nil
 }
+
+type task todo.Task
