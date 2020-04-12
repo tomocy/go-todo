@@ -2,6 +2,7 @@ package memory
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/tomocy/go-todo"
 	"github.com/tomocy/go-todo/infra/rand"
@@ -20,6 +21,10 @@ func (r *sessionRepo) NextID(context.Context) (todo.SessionID, error) {
 }
 
 func (r *sessionRepo) Pull(context.Context) (*todo.Session, error) {
+	if r.sess == nil {
+		return nil, fmt.Errorf("no session")
+	}
+
 	return r.sess, nil
 }
 
