@@ -7,6 +7,10 @@ import (
 	"github.com/tomocy/go-todo/infra/rand"
 )
 
+func NewSessionRepo() *sessionRepo {
+	return new(sessionRepo)
+}
+
 type sessionRepo struct {
 	sess *todo.Session
 }
