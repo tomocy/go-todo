@@ -11,10 +11,17 @@ type SessionRepo interface {
 	Push(context.Context, *Session) error
 }
 
-func NewSession(id SessionID, userID UserID) *Session {
-	return &Session{
-		userID: userID,
+func NewSession(id SessionID, userID UserID) (*Session, error) {
+	s := new(Session)
+
+	if err := s.setID(id); err != nil {
+		return nil, err
 	}
+	if err := s.setUserID(userID); err != nil {
+		return nil, err
+	}
+
+	return s, nil
 }
 
 type Session struct {
