@@ -24,8 +24,11 @@ func (a *app) getTasks(ctx *cli.Context) error {
 	}
 
 	a.printf("TODOs\n\n")
-	for _, t := range tasks {
+	for i, t := range tasks {
 		a.printf("%v\n", task(*t))
+		if i != len(tasks)-1 {
+			a.printf("----------\n")
+		}
 	}
 
 	return nil
