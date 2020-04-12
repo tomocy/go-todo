@@ -74,6 +74,7 @@ func (u *createTask) Do(name string, dueDate time.Time) (*todo.Task, error) {
 
 type changeDueDate struct {
 	taskRepo todo.TaskRepo
+	sessRepo todo.SessionRepo
 }
 
 func NewPostponeTask(taskRepo todo.TaskRepo, sessRepo todo.SessionRepo) *postponeTask {
