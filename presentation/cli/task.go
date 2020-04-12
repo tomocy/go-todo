@@ -9,7 +9,7 @@ import (
 )
 
 func (a *app) getTasks(ctx *cli.Context) error {
-	u := usecase.NewGetTasks(a.taskRepo())
+	u := usecase.NewGetTasks(a.taskRepo(), a.sessionRepo())
 
 	tasks, err := u.Do()
 	if err != nil {
