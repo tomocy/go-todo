@@ -86,6 +86,22 @@ func (a *app) changeDueDate(ctx *cli.Context) error {
 	return nil
 }
 
+func (a *app) cancelDueDate(ctx *cli.Context) error {
+	u := usecase.NewCancelDueDate(a.taskRepo(), a.sessionRepo())
+
+	id := todo.TaskID(ctx.String("id"))
+
+	raw, err := u.Do(id)
+	if err != nil {
+		return err
+	}
+
+	a.printf("Task is successfully configured.\n\n")
+	a.printf("%v\n", task(*raw))
+
+	return nil
+}
+
 func (a *app) postponeTask(ctx *cli.Context) error {
 	u := usecase.NewPostponeTask(a.taskRepo(), a.sessionRepo())
 

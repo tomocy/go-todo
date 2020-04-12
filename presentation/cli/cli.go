@@ -121,6 +121,16 @@ func (a *app) init() {
 							},
 							Action: a.changeDueDate,
 						},
+						{
+							Name: "cancel",
+							Flags: []cli.Flag{
+								cli.StringFlag{
+									Name:     "id",
+									Required: true,
+								},
+							},
+							Action: a.cancelDueDate,
+						},
 					},
 				},
 				{
