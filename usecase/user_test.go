@@ -29,19 +29,21 @@ func TestCreateUser(t *testing.T) {
 }
 
 func TestAuthenticateUser(t *testing.T) {
-	repo := new(memory.UserRepo)
+	userRepo := new(memory.UserRepo)
 	createUsecase := createUser{
-		repo: repo,
+		repo: userRepo,
 	}
 
 	name, email, pass := "name", "email", "pass"
 	createUsecase.Do(name, email, pass)
 
+	sessRepo := memory.NewSessionRepo()
 	u := authenticateUser{
-		repo: repo,
+		userRepo: userRepo,
+		sessRepo: sessRepo,
 	}
 
-	user, err := u.Do(email, pass)
+	user, sess, err := u.Do(email, pass)
 	if err != nil {
 		t.Errorf("should have authenticated user: %s", err)
 		return
@@ -49,6 +51,11 @@ func TestAuthenticateUser(t *testing.T) {
 
 	if err := assertUser(user, name, email, pass); err != nil {
 		t.Errorf("should have returned the create user: %s", err)
+		return
+	}
+
+	if err := assertSession(sess, user.ID()); err != nil {
+		t.Errorf("should have returned the created session: %s", err)
 		return
 	}
 }
@@ -62,6 +69,14 @@ func assertUser(u *todo.User, name, email, pass string) error {
 	}
 	if !u.Password().IsSame(pass) {
 		return fmt.Errorf("unexpected password: password is not correct")
+	}
+
+	return nil
+}
+
+func assertSession(s *todo.Session, userID todo.UserID) error {
+	if s.UserID() != userID {
+		return reportUnexpected("user id", s.UserID(), userID)
 	}
 
 	return nil

@@ -42,25 +42,39 @@ func (u *createUser) Do(name, email, password string) (*todo.User, error) {
 
 func NewAuthenticateUser(repo todo.UserRepo) *authenticateUser {
 	return &authenticateUser{
-		repo: repo,
+		userRepo: repo,
 	}
 }
 
 type authenticateUser struct {
-	repo todo.UserRepo
+	userRepo todo.UserRepo
+	sessRepo todo.SessionRepo
 }
 
-func (u *authenticateUser) Do(email, password string) (*todo.User, error) {
+func (u *authenticateUser) Do(email, password string) (*todo.User, *todo.Session, error) {
 	ctx := context.TODO()
 
-	user, err := u.repo.FindByEmail(ctx, email)
+	user, err := u.userRepo.FindByEmail(ctx, email)
 	if err != nil {
-		return nil, fmt.Errorf("failed to find user by email: %w", err)
+		return nil, nil, fmt.Errorf("failed to find user by email: %w", err)
 	}
 
 	if !user.Password().IsSame(password) {
-		return nil, fmt.Errorf("incorrect password")
+		return nil, nil, fmt.Errorf("incorrect password")
 	}
 
-	return user, nil
+	sessID, err := u.sessRepo.NextID(ctx)
+	if err != nil {
+		return nil, nil, fmt.Errorf("failed to generate session id: %w", err)
+	}
+	sess, err := todo.NewSession(sessID, user.ID())
+	if err != nil {
+		return nil, nil, fmt.Errorf("failed to generate session: %w", err)
+	}
+
+	if err := u.sessRepo.Push(ctx, sess); err != nil {
+		return nil, nil, fmt.Errorf("failed to save session: %w", err)
+	}
+
+	return user, sess, nil
 }
