@@ -111,3 +111,13 @@ type deleteTask struct {
 	taskRepo todo.TaskRepo
 	sessRepo todo.SessionRepo
 }
+
+func (u *deleteTask) Do(id todo.TaskID) error {
+	ctx := context.TODO()
+
+	if _, err := u.sessRepo.Pull(ctx); err != nil {
+		return fmt.Errorf("failed to pull session: %w", err)
+	}
+
+	return u.taskRepo.Delete(ctx, id)
+}

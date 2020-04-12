@@ -103,6 +103,37 @@ func TestPostponeTask(t *testing.T) {
 	}
 }
 
+func TestDeleteTask(t *testing.T) {
+	taskRepo := new(memory.TaskRepo)
+	sessRepo := memory.NewSessionRepo()
+
+	userID, name, dueDate := todo.UserID("user id"), "task", time.Time{}
+
+	sess, _ := todo.NewSession(todo.SessionID("session id"), userID)
+	sessRepo.Push(context.Background(), sess)
+
+	createUsecase := createTask{
+		taskRepo: taskRepo,
+		sessRepo: sessRepo,
+	}
+
+	task, _ := createUsecase.Do(name, dueDate)
+
+	u := deleteTask{
+		taskRepo: taskRepo,
+		sessRepo: sessRepo,
+	}
+	if err := u.Do(task.ID()); err != nil {
+		t.Errorf("should have deleted task: %s", err)
+		return
+	}
+
+	if _, err := taskRepo.Find(context.Background(), task.ID()); err == nil {
+		t.Errorf("should have deleted task")
+		return
+	}
+}
+
 func assertTask(t *todo.Task, userID todo.UserID, name string, dueDate time.Time) error {
 	if t.UserID() != userID {
 		return reportUnexpected("user id", t.UserID(), userID)
