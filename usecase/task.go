@@ -107,6 +107,13 @@ func (u *postponeTask) Do(id todo.TaskID) (*todo.Task, error) {
 	return task, nil
 }
 
+func NewDeleteTask(taskRepo todo.TaskRepo, sessRepo todo.SessionRepo) *deleteTask {
+	return &deleteTask{
+		taskRepo: taskRepo,
+		sessRepo: sessRepo,
+	}
+}
+
 type deleteTask struct {
 	taskRepo todo.TaskRepo
 	sessRepo todo.SessionRepo
