@@ -83,3 +83,9 @@ func (u *authenticateUser) Do(email, password string) (*todo.User, *todo.Session
 type deauthenticateUser struct {
 	repo todo.SessionRepo
 }
+
+func (u *deauthenticateUser) Do() error {
+	ctx := context.TODO()
+
+	return u.repo.Delete(ctx)
+}

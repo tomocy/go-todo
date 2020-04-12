@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"context"
 	"fmt"
 	"testing"
 
@@ -56,6 +57,26 @@ func TestAuthenticateUser(t *testing.T) {
 
 	if err := assertSession(sess, user.ID()); err != nil {
 		t.Errorf("should have returned the created session: %s", err)
+		return
+	}
+}
+
+func TestDeauthenticateUser(t *testing.T) {
+	sessRepo := memory.NewSessionRepo()
+	sess, _ := todo.NewSession(todo.SessionID("session id"), todo.UserID("user id"))
+	sessRepo.Push(context.Background(), sess)
+
+	u := deauthenticateUser{
+		repo: sessRepo,
+	}
+
+	if err := u.Do(); err != nil {
+		t.Errorf("should have deauthenticate user: %s", err)
+		return
+	}
+
+	if _, err := sessRepo.Pull(context.Background()); err == nil {
+		t.Errorf("should have deleted session")
 		return
 	}
 }
