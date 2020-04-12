@@ -10,7 +10,7 @@ import (
 )
 
 func TestCreateUser(t *testing.T) {
-	repo := new(memory.UserRepo)
+	repo := memory.NewUserRepo()
 	u := createUser{
 		repo: repo,
 	}
@@ -30,7 +30,7 @@ func TestCreateUser(t *testing.T) {
 }
 
 func TestDeleteUser(t *testing.T) {
-	userRepo := new(memory.UserRepo)
+	userRepo := memory.NewUserRepo()
 	sessRepo := memory.NewSessionRepo()
 
 	name, email, pass := "name", "email", "pass"
@@ -62,7 +62,7 @@ func TestDeleteUser(t *testing.T) {
 }
 
 func TestAuthenticateUser(t *testing.T) {
-	userRepo := new(memory.UserRepo)
+	userRepo := memory.NewUserRepo()
 	createUsecase := createUser{
 		repo: userRepo,
 	}

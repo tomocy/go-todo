@@ -187,7 +187,7 @@ func (a *app) userRepo() todo.UserRepo {
 
 		return file.NewUserRepo(fname)
 	default:
-		return new(memory.UserRepo)
+		return memory.NewUserRepo()
 	}
 }
 

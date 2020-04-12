@@ -8,17 +8,21 @@ import (
 	"github.com/tomocy/go-todo/infra/rand"
 )
 
-type UserRepo struct {
+func NewUserRepo() *userRepo {
+	return &userRepo{
+		users: make(map[todo.UserID]*todo.User),
+	}
+}
+
+type userRepo struct {
 	users map[todo.UserID]*todo.User
 }
 
-func (r *UserRepo) NextID(context.Context) (todo.UserID, error) {
+func (r *userRepo) NextID(context.Context) (todo.UserID, error) {
 	return todo.UserID(rand.GenerateString(30)), nil
 }
 
-func (r *UserRepo) FindByEmail(_ context.Context, email string) (*todo.User, error) {
-	r.initIfNecessary()
-
+func (r *userRepo) FindByEmail(_ context.Context, email string) (*todo.User, error) {
 	for _, u := range r.users {
 		if u.Email() == email {
 			return u, nil
@@ -28,24 +32,14 @@ func (r *UserRepo) FindByEmail(_ context.Context, email string) (*todo.User, err
 	return nil, fmt.Errorf("no such user")
 }
 
-func (r *UserRepo) Save(_ context.Context, u *todo.User) error {
-	r.initIfNecessary()
-
+func (r *userRepo) Save(_ context.Context, u *todo.User) error {
 	r.users[u.ID()] = u
 
 	return nil
 }
 
-func (r *UserRepo) Delete(_ context.Context, id todo.UserID) error {
-	r.initIfNecessary()
-
+func (r *userRepo) Delete(_ context.Context, id todo.UserID) error {
 	delete(r.users, id)
 
 	return nil
-}
-
-func (u *UserRepo) initIfNecessary() {
-	if u.users == nil {
-		u.users = make(map[todo.UserID]*todo.User)
-	}
 }
