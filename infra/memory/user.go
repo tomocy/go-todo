@@ -36,6 +36,14 @@ func (r *UserRepo) Save(_ context.Context, u *todo.User) error {
 	return nil
 }
 
+func (r *UserRepo) Delete(_ context.Context, id todo.UserID) error {
+	r.initIfNecessary()
+
+	delete(r.users, id)
+
+	return nil
+}
+
 func (u *UserRepo) initIfNecessary() {
 	if u.users == nil {
 		u.users = make(map[todo.UserID]*todo.User)
