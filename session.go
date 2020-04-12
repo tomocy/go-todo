@@ -13,3 +13,5 @@ type Session struct {
 func (s *Session) UserID() UserID {
 	return s.userID
 }
+
+type SessionID string
