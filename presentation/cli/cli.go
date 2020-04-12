@@ -89,6 +89,8 @@ const (
 
 	repoFile   = "file"
 	repoMemory = "memory"
+
+	defaultStatusFilename = "./status.json"
 )
 
 func (a *app) userRepo() todo.UserRepo {
@@ -101,7 +103,7 @@ func (a *app) userRepo() todo.UserRepo {
 	case repoFile:
 		fname, ok := os.LookupEnv(envStatusFilename)
 		if !ok {
-			fname = "./"
+			fname = defaultStatusFilename
 		}
 
 		return file.NewUserRepo(fname)
@@ -120,7 +122,7 @@ func (a *app) sessionRepo() todo.SessionRepo {
 	case repoFile:
 		fname, ok := os.LookupEnv(envStatusFilename)
 		if !ok {
-			fname = "./"
+			fname = defaultStatusFilename
 		}
 
 		return file.NewSessionRepo(fname)
@@ -139,7 +141,7 @@ func (a *app) taskRepo() todo.TaskRepo {
 	case repoFile:
 		fname, ok := os.LookupEnv(envStatusFilename)
 		if !ok {
-			fname = "./"
+			fname = defaultStatusFilename
 		}
 
 		return file.NewTaskRepo(fname)
