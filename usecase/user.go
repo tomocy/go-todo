@@ -80,6 +80,12 @@ func (u *authenticateUser) Do(email, password string) (*todo.User, *todo.Session
 	return user, sess, nil
 }
 
+func NewDeauthenticateUser(repo todo.SessionRepo) *deauthenticateUser {
+	return &deauthenticateUser{
+		repo: repo,
+	}
+}
+
 type deauthenticateUser struct {
 	repo todo.SessionRepo
 }
