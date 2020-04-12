@@ -19,6 +19,10 @@ func (r *sessionRepo) NextID(context.Context) (todo.SessionID, error) {
 	return todo.SessionID(rand.GenerateString(30)), nil
 }
 
+func (r *sessionRepo) Pull(context.Context) (*todo.Session, error) {
+	return r.sess, nil
+}
+
 func (r *sessionRepo) Push(_ context.Context, s *todo.Session) error {
 	r.sess = s
 
