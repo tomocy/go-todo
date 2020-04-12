@@ -29,6 +29,17 @@ func (r *sessionRepo) Pull(context.Context) (*todo.Session, error) {
 	return s.Session.adapt(), nil
 }
 
+func (r *sessionRepo) Push(_ context.Context, sess *todo.Session) error {
+	s, err := load(r.fname)
+	if err != nil {
+		return fmt.Errorf("failed to load session: %w", err)
+	}
+
+	s.Session = convertSession(sess)
+
+	return save(r.fname, s)
+}
+
 func convertSession(src *todo.Session) *session {
 	return &session{
 		ID:     src.ID(),
