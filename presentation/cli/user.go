@@ -48,6 +48,18 @@ func (a *app) authenticateUser(ctx *cli.Context) error {
 	return nil
 }
 
+func (a *app) deauthenticateUser(ctx *cli.Context) error {
+	u := usecase.NewDeauthenticateUser(a.sessionRepo())
+
+	if err := u.Do(); err != nil {
+		return err
+	}
+
+	a.printf("User is successfully deauthenticated.\n")
+
+	return nil
+}
+
 type user todo.User
 
 func (u user) String() string {

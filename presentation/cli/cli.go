@@ -65,6 +65,11 @@ func (a *app) init() {
 					},
 					Action: a.authenticateUser,
 				},
+				{
+					Name:      "deauthenticate",
+					ShortName: "deauthn",
+					Action:    a.deauthenticateUser,
+				},
 			},
 		},
 		{
