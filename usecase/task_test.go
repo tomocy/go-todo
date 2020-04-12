@@ -88,7 +88,8 @@ func TestPostponeTask(t *testing.T) {
 	task, _ := createUsecase.Do(name, dueDate)
 
 	u := postponeTask{
-		repo: taskRepo,
+		taskRepo: taskRepo,
+		sessRepo: sessRepo,
 	}
 	task, err := u.do(task.ID())
 	if err != nil {

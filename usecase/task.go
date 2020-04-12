@@ -73,13 +73,18 @@ func (u *createTask) Do(name string, dueDate time.Time) (*todo.Task, error) {
 }
 
 type postponeTask struct {
-	repo todo.TaskRepo
+	taskRepo todo.TaskRepo
+	sessRepo todo.SessionRepo
 }
 
 func (u *postponeTask) do(id todo.TaskID) (*todo.Task, error) {
 	ctx := context.TODO()
 
-	task, err := u.repo.Find(ctx, id)
+	if _, err := u.sessRepo.Pull(ctx); err != nil {
+		return nil, fmt.Errorf("failed to pull session: %w", err)
+	}
+
+	task, err := u.taskRepo.Find(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to find task: %w", err)
 	}
@@ -88,7 +93,7 @@ func (u *postponeTask) do(id todo.TaskID) (*todo.Task, error) {
 		return nil, fmt.Errorf("failed to postpone task: %w", err)
 	}
 
-	if err := u.repo.Save(ctx, task); err != nil {
+	if err := u.taskRepo.Save(ctx, task); err != nil {
 		return nil, fmt.Errorf("failed to postpone task: %w", err)
 	}
 
