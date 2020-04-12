@@ -76,6 +76,20 @@ func (a *app) postponeTask(ctx *cli.Context) error {
 	return nil
 }
 
+func (a *app) deleteTask(ctx *cli.Context) error {
+	u := usecase.NewDeleteTask(a.taskRepo(), a.sessionRepo())
+
+	id := todo.TaskID(ctx.String("id"))
+
+	if err := u.Do(id); err != nil {
+		return err
+	}
+
+	a.printf("Task is successfully deleted.\n")
+
+	return nil
+}
+
 type task todo.Task
 
 func (t task) String() string {

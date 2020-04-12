@@ -113,6 +113,16 @@ func (a *app) init() {
 					},
 					Action: a.postponeTask,
 				},
+				{
+					Name: "delete",
+					Flags: []cli.Flag{
+						cli.StringFlag{
+							Name:     "id",
+							Required: true,
+						},
+					},
+					Action: a.deleteTask,
+				},
 			},
 		},
 	}
