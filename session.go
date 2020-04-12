@@ -9,6 +9,7 @@ type SessionRepo interface {
 	NextID(context.Context) (SessionID, error)
 	Pull(context.Context) (*Session, error)
 	Push(context.Context, *Session) error
+	Delete(context.Context) error
 }
 
 func NewSession(id SessionID, userID UserID) (*Session, error) {
