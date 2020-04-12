@@ -56,6 +56,27 @@ func (r *userRepo) Save(_ context.Context, u *todo.User) error {
 	return r.save(u)
 }
 
+func (r *userRepo) Delete(_ context.Context, id todo.UserID) error {
+	s, err := load(r.fname)
+	if err != nil {
+		return fmt.Errorf("failed to load users: %w", err)
+	}
+
+	for i, u := range s.Users {
+		if u.ID != id {
+			continue
+		}
+
+		s.Users = append(s.Users[i:], s.Users[i+1:]...)
+	}
+
+	if err := save(r.fname, s); err != nil {
+		return fmt.Errorf("failed to save users: %w", err)
+	}
+
+	return nil
+}
+
 func (r *userRepo) save(u *todo.User) error {
 	s, err := load(r.fname)
 	if err != nil {
