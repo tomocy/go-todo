@@ -25,6 +25,7 @@ func (a *app) Run(args []string) error {
 		return fmt.Errorf("failed to parse: %w", err)
 	}
 
+	a.printf("listen and serve on %s\n", a.addr)
 	if err := http.ListenAndServe(a.addr, a); err != nil {
 		return fmt.Errorf("failed to listen and serve: %w", err)
 	}
