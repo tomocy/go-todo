@@ -3,11 +3,13 @@ package html
 import (
 	"flag"
 	"fmt"
+	"io"
 	"net/http"
 )
 
 type app struct {
 	*http.ServeMux
+	w    io.Writer
 	addr string
 }
 
