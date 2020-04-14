@@ -12,7 +12,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-func NewApp(w io.Writer) *app {
+func New(w io.Writer) *app {
 	a := &app{
 		w: w,
 	}
