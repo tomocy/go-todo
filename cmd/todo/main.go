@@ -14,3 +14,7 @@ func main() {
 		os.Exit(1)
 	}
 }
+
+type runner interface {
+	Run([]string) error
+}
