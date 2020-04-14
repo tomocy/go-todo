@@ -5,6 +5,11 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
+
+	"github.com/tomocy/go-todo"
+	"github.com/tomocy/go-todo/infra/file"
+	"github.com/tomocy/go-todo/infra/memory"
 )
 
 func New(w io.Writer) *app {
@@ -52,4 +57,33 @@ func (a *app) parse(args []string) error {
 
 func (a *app) printf(format string, as ...interface{}) {
 	fmt.Fprintf(a.w, format, as...)
+}
+
+const (
+	envRepo           = "TODO_REPO"
+	envStatusFilename = "TODO_STATUS_FILENAME"
+
+	repoFile   = "file"
+	repoMemory = "memory"
+
+	defaultStatusFilename = "./status.json"
+)
+
+func (a *app) userRepo() todo.UserRepo {
+	repo, ok := os.LookupEnv(envRepo)
+	if !ok {
+		repo = repoMemory
+	}
+
+	switch repo {
+	case repoFile:
+		fname, ok := os.LookupEnv(envStatusFilename)
+		if !ok {
+			fname = defaultStatusFilename
+		}
+
+		return file.NewUserRepo(fname)
+	default:
+		return memory.NewUserRepo()
+	}
 }
