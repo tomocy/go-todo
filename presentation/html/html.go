@@ -48,3 +48,7 @@ func (a *app) parse(args []string) error {
 
 	return nil
 }
+
+func (a *app) printf(format string, as ...interface{}) {
+	fmt.Fprintf(a.w, format, as...)
+}
