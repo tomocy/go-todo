@@ -7,6 +7,13 @@ import (
 	"net/http"
 )
 
+func New(w io.Writer) *app {
+	return &app{
+		ServeMux: http.NewServeMux(),
+		w:        w,
+	}
+}
+
 type app struct {
 	*http.ServeMux
 	w    io.Writer
@@ -17,8 +24,6 @@ func (a *app) Run(args []string) error {
 	if err := a.parse(args); err != nil {
 		return fmt.Errorf("failed to parse: %w", err)
 	}
-
-	a.ServeMux = http.NewServeMux()
 
 	if err := http.ListenAndServe(a.addr, a); err != nil {
 		return fmt.Errorf("failed to listen and serve: %w", err)
