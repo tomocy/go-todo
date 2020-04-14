@@ -30,6 +30,8 @@ func (a *app) Run(args []string) error {
 		return fmt.Errorf("failed to parse: %w", err)
 	}
 
+	a.register()
+
 	a.printf("listen and serve on %s\n", a.addr)
 	if err := http.ListenAndServe(a.addr, a); err != nil {
 		return fmt.Errorf("failed to listen and serve: %w", err)
@@ -54,6 +56,8 @@ func (a *app) parse(args []string) error {
 
 	return nil
 }
+
+func (a *app) register() {}
 
 func (a *app) printf(format string, as ...interface{}) {
 	fmt.Fprintf(a.w, format, as...)
