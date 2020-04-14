@@ -57,7 +57,9 @@ func (a *app) parse(args []string) error {
 	return nil
 }
 
-func (a *app) register() {}
+func (a *app) register() {
+	a.HandleFunc("/users", a.users)
+}
 
 func (a *app) printf(format string, as ...interface{}) {
 	fmt.Fprintf(a.w, format, as...)
